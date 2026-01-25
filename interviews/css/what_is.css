@@ -1,0 +1,96 @@
+/* Simple, clean styles for your Senior Python Developer page */
+
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --accent:#0d6efd;
+  --text:#0f1724;
+  --muted:#556070;
+  --radius:10px;
+  --max-width:900px;
+  --gap:16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  padding:24px;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:0 6px 18px rgba(16,24,40,0.08);
+}
+
+/* Headings */
+h1{
+  margin:0 0 8px 0;
+  color:var(--accent);
+  font-size:1.6rem;
+}
+h2{
+  margin:18px 0 8px 0;
+  font-size:1.05rem;
+  color:var(--text);
+}
+
+/* Lists */
+ul{
+  margin:0 0 12px 18px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* Table */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+table th, table td{
+  padding:10px;
+  border:1px solid #e6e9ef;
+  text-align:left;
+  color:var(--muted);
+}
+table thead th{
+  background:#f1f5ff;
+  color:var(--text);
+  font-weight:600;
+}
+
+/* Button */
+.btn-export{
+  display:inline-block;
+  margin-top:14px;
+  padding:10px 14px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:8px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+}
+
+/* Responsive */
+@media (max-width:600px){
+  .container{padding:16px}
+  h1{font-size:1.25rem}
+}
+
+/* Print: hide interactive elements */
+@media print{
+  .btn-export{display:none}
+  body{background:#fff}
+  .container{box-shadow:none;border:none}
+}
