@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Core Python Mastery Quiz</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#7dd3fc;
+    --muted:#94a3b8;
+    --correct:#10b981;
+    --danger:#fb7185;
+    --glass: rgba(255,255,255,0.03);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(125,211,252,0.06), transparent 10%),
+      linear-gradient(180deg, #071029 0%, #071827 100%);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:32px;
+    box-sizing:border-box;
+  }
+  .container{
+    max-width:980px;
+    margin:0 auto;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:20px;
+  }
+  .logo{
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),#60a5fa);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#04263b;
+    font-weight:700;
+    box-shadow:0 6px 18px rgba(2,6,23,0.6);
+  }
+  h1{font-size:20px;margin:0}
+  p.lead{margin:6px 0 0;color:var(--muted);font-size:14px}
+  main{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+    margin-top:18px;
+  }
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  details{
+    background:var(--glass);
+    border-radius:10px;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-weight:600;
+    color:#e6f6ff;
+  }
+  summary::-webkit-details-marker{display:none}
+  .qmeta{font-size:13px;color:var(--muted);font-weight:500}
+  .answer{
+    margin-top:10px;
+    padding:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border-radius:8px;
+    color:#dff7ff;
+    line-height:1.45;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .tag{
+    display:inline-block;
+    padding:6px 8px;
+    border-radius:999px;
+    background:rgba(125,211,252,0.08);
+    color:var(--accent);
+    font-weight:700;
+    font-size:12px;
+  }
+  .hint{color:var(--muted);font-size:13px;margin-top:8px}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:12px;
+  }
+  footer{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .small{
+    font-size:13px;color:var(--muted)
+  }
+  @media (max-width:640px){
+    body{padding:18px}
+    header{gap:12px}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Py</div>
+      <div>
+        <h1>Core Python Mastery Quiz</h1>
+        <p class="lead">Quick recall questions for advanced features, memory, concurrency, and testing</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="tag">Advanced language features</div>
+            <div class="hint">Decorators, generators, context managers, closures, metaclasses</div>
+          </div>
+          <div class="small">Flip each card to reveal answer</div>
+        </div>
+
+        <details>
+          <summary>
+            <span>Q1. What is a decorator and how is it typically used</span>
+            <span class="qmeta">Short answer</span>
+          </summary>
+          <div class="answer">
+            **Answer:** A decorator is a callable that takes a function or class and returns a modified function or class. It's commonly used to add behavior like logging, access control, or caching without changing the original function body.
+            <div class="hint">Example: `@functools.wraps` preserves metadata; `@cache` adds memoization.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q2. How do generators differ from normal functions</span>
+            <span class="qmeta">Key idea</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Generators use `yield` to produce a sequence of values lazily, maintaining state between yields. They are memory-efficient for large sequences and can be iterated like iterators.
+            <div class="hint">Use `next()` or `for` loops; `yield from` delegates to subgenerators.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q3. What is a context manager and how to implement one</span>
+            <span class="qmeta">Pattern</span>
+          </summary>
+          <div class="answer">
+            **Answer:** A context manager defines setup and teardown around a block using `with`. Implement via a class with `__enter__` and `__exit__` or a generator decorated with `@contextlib.contextmanager`.
+            <div class="hint">`__exit__` handles exceptions; return value of `__enter__` is bound to the `as` target.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q4. Define closure and give a use case</span>
+            <span class="qmeta">Concept</span>
+          </summary>
+          <div class="answer">
+            **Answer:** A closure is a function that captures variables from its enclosing scope, preserving them after the outer function returns. Use closures for factory functions or to maintain private state without classes.
+            <div class="hint">Captured variables are read-only unless declared `nonlocal`.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q5. What are metaclasses and when to use them</span>
+            <span class="qmeta">Advanced</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Metaclasses control class creation (they are the class of a class). Use them to enforce class invariants, auto-register subclasses, or modify attributes at class creation time.
+            <div class="hint">Default metaclass is `type`; override `__new__` or `__init__` in a metaclass.</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="tag">Memory management</div>
+            <div class="hint">Garbage collection, profiling, optimization</div>
+          </div>
+          <div class="small">Test your recall</div>
+        </div>
+
+        <details>
+          <summary>
+            <span>Q6. How does Python garbage collection work</span>
+            <span class="qmeta">Mechanism</span>
+          </summary>
+          <div class="answer">
+            **Answer:** CPython uses reference counting plus a cyclic garbage collector to detect and collect reference cycles. Objects are freed when reference count drops to zero; cycles are handled by the GC generations.
+            <div class="hint">Use `gc` module to inspect or tune collection; watch for __del__ interactions.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q7. Name two profiling tools and when to use them</span>
+            <span class="qmeta">Tools</span>
+          </summary>
+          <div class="answer">
+            **Answer:** `cProfile` for deterministic function-level profiling; `line_profiler` for line-by-line hotspots. Use `memory_profiler` to track memory usage.
+            <div class="hint">Combine profiling with representative workloads for accurate results.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q8. Give one optimization technique for Python code</span>
+            <span class="qmeta">Practical</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Use algorithmic improvements first (better data structures), then reduce allocations (reuse objects), use built-in functions and comprehensions, and consider C extensions or PyPy for heavy workloads.
+            <div class="hint">Profile before optimizing; micro-optimizations often have limited impact.</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="tag">Concurrency and parallelism</div>
+            <div class="hint">threading, multiprocessing, asyncio, event-driven</div>
+          </div>
+          <div class="small">Match concepts to use cases</div>
+        </div>
+
+        <details>
+          <summary>
+            <span>Q9. When is threading appropriate in Python</span>
+            <span class="qmeta">Use case</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Threading is suitable for I/O-bound tasks where the Global Interpreter Lock (GIL) is not a bottleneck, such as network requests or file I/O. For CPU-bound tasks, prefer multiprocessing.
+            <div class="hint">Use `concurrent.futures.ThreadPoolExecutor` for simpler thread pools.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q10. What does asyncio provide and when to use it</span>
+            <span class="qmeta">Async</span>
+          </summary>
+          <div class="answer">
+            **Answer:** `asyncio` provides an event loop and async/await syntax for cooperative concurrency. Use it for high-concurrency I/O-bound applications like web servers or clients.
+            <div class="hint">Combine with `aiohttp` for async HTTP; avoid blocking calls inside async code.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q11. How does multiprocessing differ from threading</span>
+            <span class="qmeta">Difference</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Multiprocessing runs separate Python processes with independent memory, bypassing the GIL and enabling true parallel CPU-bound work. Communication uses IPC like queues or pipes.
+            <div class="hint">Process startup cost is higher; use `multiprocessing.Pool` for worker pools.</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="tag">Error handling and testing</div>
+            <div class="hint">Exceptions, unit tests, integration tests</div>
+          </div>
+          <div class="small">Practice robust patterns</div>
+        </div>
+
+        <details>
+          <summary>
+            <span>Q12. Best practice for exception handling</span>
+            <span class="qmeta">Pattern</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Catch specific exceptions, avoid bare `except:`, clean up resources in `finally` or use context managers, and fail fast with clear error messages. Log exceptions with context.
+            <div class="hint">Use custom exception types for domain-specific errors.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q13. Unit testing vs integration testing</span>
+            <span class="qmeta">Compare</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Unit tests verify small, isolated units (functions/classes) often with mocks. Integration tests verify interactions between components and external systems. Both are essential.
+            <div class="hint">Use `pytest` for expressive tests and fixtures; run integration tests in CI with realistic environments.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>Q14. How to test async code with pytest</span>
+            <span class="qmeta">Technique</span>
+          </summary>
+          <div class="answer">
+            **Answer:** Use `pytest` with `pytest-asyncio` or `anyio` to write `async def` tests and run them on an event loop. Use fixtures to set up async resources.
+            <div class="hint">Mark tests with `@pytest.mark.asyncio` or use `asyncio` fixtures provided by plugins.</div>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <div class="small">Study tip: try answering aloud before revealing each answer</div>
+      <div class="small">Created for Core Python Mastery topics</div>
+    </footer>
+  </div>
+</body>
+</html>
