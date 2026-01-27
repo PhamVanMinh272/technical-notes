@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Software Engineering Skills – Memorization Quiz</title>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    :root {
+      --card-border: #dee2e6;
+      --link: #0d6efd;
+    }
+
+    /* Keep the background white for on-screen and print */
+    html, body {
+      background: #ffffff !important;
+      color: #212529;
+    }
+
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .quiz-card {
+      border: 1px solid var(--card-border);
+      border-radius: .5rem;
+    }
+
+    .quiz-question {
+      font-weight: 600;
+    }
+
+    .topic-badge {
+      font-size: 0.75rem;
+    }
+
+    .controls .btn, .controls .form-check {
+      margin-right: .5rem;
+      margin-bottom: .5rem;
+    }
+
+    .muted {
+      color: #6c757d;
+    }
+
+    /* Print rules: answers hidden, controls hidden, white background, neat borders */
+    @media print {
+      html {
+          font-size: 12px; /* try 11px or 10.5px if you need smaller */
+        }
+      @page {
+        size: auto;
+        margin: 12mm;
+      }
+
+      body {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Hide all controls and non-essential UI */
+      .no-print,
+      .page-header {
+        display: none !important;
+      }
+
+      /* Force answers to hide even if expanded */
+      .collapse,
+      .collapse.show {
+        display: none !important;
+      }
+
+      /* Make borders visible in print */
+      .quiz-card {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+      }
+
+      /* Prevent bootstrap's link:after content in print */
+      a[href]:after {
+        content: "" !important;
+      }
+
+      /* Two ruled lines for student answers */
+      .write-lines {
+        padding: .5rem 0 0.25rem 0;
+      }
+      .write-lines .line {
+        border-bottom: 1px dotted #adb5bd;
+        height: 1.75rem; /* space to handwrite or type */
+        margin-top: .35rem;
+      }
+      /* Two ruled lines for student answers */
+      .write-lines {
+        padding: .5rem 0 0.25rem 0;
+      }
+      .write-lines .line {
+        border-bottom: 1px dotted #adb5bd;
+        height: 1.75rem; /* space to handwrite or type */
+        margin-top: .35rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <header class="page-header">
+    <div class="container py-3">
+      <h1 class="h3 mb-0">Software Engineering Skills – Memorization Quiz</h1>
+      <small class="text-muted">Click a question to reveal the answer. Answers are <strong>excluded</strong> when exporting to PDF.</small>
+    </div>
+  </header>
+
+  <main class="container my-4">
+    <!-- Controls -->
+    <section class="controls no-print mb-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-12 col-xl-7">
+          <div class="d-flex flex-wrap align-items-center">
+            <div class="me-3 fw-semibold">Filter topics:</div>
+
+            <div class="form-check me-3">
+              <input class="form-check-input topic-filter" type="checkbox" value="Design Patterns" id="filterDesign" checked>
+              <label class="form-check-label" for="filterDesign">Design Patterns</label>
+            </div>
+            <div class="form-check me-3">
+              <input class="form-check-input topic-filter" type="checkbox" value="Clean Architecture" id="filterClean" checked>
+              <label class="form-check-label" for="filterClean">Clean Architecture</label>
+            </div>
+            <div class="form-check me-3">
+              <input class="form-check-input topic-filter" type="checkbox" value="Version Control" id="filterVC" checked>
+              <label class="form-check-label" for="filterVC">Version Control (Git)</label>
+            </div>
+            <div class="form-check me-3">
+              <input class="form-check-input topic-filter" type="checkbox" value="Documentation" id="filterDocs" checked>
+              <label class="form-check-label" for="filterDocs">Documentation &amp; Readability</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-5 text-xl-end">
+          <div class="d-flex flex-wrap justify-content-start justify-content-xl-end">
+            <button id="btnShuffle" class="btn btn-outline-secondary">
+              Shuffle
+            </button>
+            <button id="btnExpandAll" class="btn btn-outline-primary">
+              Expand all answers
+            </button>
+            <button id="btnCollapseAll" class="btn btn-outline-primary">
+              Collapse all answers
+            </button>
+            <button id="btnExport" class="btn btn-success">
+              Export to PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz container -->
+    <section id="quiz" class="row g-3">
+      <!-- Cards will be injected here -->
+    </section>
+
+    <p class="mt-3 muted">
+      Tip: Use the filters and “Shuffle” to improve recall. “Export to PDF” hides answers by design.
+    </p>
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+
+  <script>
+    // ======= Data: Questions & Answers =======
+    // You can add/edit items here. category must be one of:
+    // "Design Patterns", "Clean Architecture", "Version Control", "Documentation"
+    const QUESTIONS = [
+      // --- Design Patterns ---
+      {
+        category: "Design Patterns",
+        q: "What problem does the Singleton pattern solve, and what are its common pitfalls?",
+        a: `
+          Ensures exactly one instance and a global access point (e.g., app config, logging).<br/>
+          Pitfalls: hidden global state, tight coupling, difficult testing/mocking, potential concurrency issues if lazily initialized without proper synchronization.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "Compare Factory Method vs Abstract Factory.",
+        a: `
+          <strong>Factory Method</strong>: Subclasses decide which concrete product to create.<br/>
+          <strong>Abstract Factory</strong>: Creates families of related objects without specifying their concrete classes.<br/>
+          Use Abstract Factory when products must be used together and vary as a set; use Factory Method for single product variability.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "When would you apply the Observer pattern? Name pros/cons.",
+        a: `
+          Use when multiple dependents need automatic updates (UI events, pub/sub, domain events).<br/>
+          Pros: decoupling, extensibility.<br/>
+          Cons: update ordering, potential memory leaks if observers not unsubscribed, debugging event cascades.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "Explain the Strategy pattern and give an example.",
+        a: `
+          Encapsulates interchangeable algorithms behind a common interface. The client selects a strategy at runtime.<br/>
+          Example: Choosing a sorting algorithm, payment method, or compression algorithm based on context.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "Strategy vs State pattern—what's the difference?",
+        a: `
+          Both replace conditional logic with polymorphism. <strong>Strategy</strong> swaps algorithms; <strong>State</strong> represents internal object states that change behavior and transition over time.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "Builder vs Factory—when to use each?",
+        a: `
+          <strong>Builder</strong> assembles complex objects step by step, useful for many optional parts/parameters (fluent APIs).<br/>
+          <strong>Factory</strong> picks the concrete type but typically returns a fully constructed instance.
+        `
+      },
+      {
+        category: "Design Patterns",
+        q: "Why can Singletons be harmful and what are safer alternatives?",
+        a: `
+          Harmful: hidden dependencies, global mutable state, hard to test, lifecycle headaches.<br/>
+          Alternatives: dependency injection, module-level single instances passed explicitly, or scoped services.
+        `
+      },
+
+      // --- Clean Architecture ---
+      {
+        category: "Clean Architecture",
+        q: "Summarize SOLID principles.",
+        a: `
+          <strong>S</strong>ingle Responsibility: one reason to change.<br/>
+          <strong>O</strong>pen/Closed: open for extension, closed for modification.<br/>
+          <strong>L</strong>iskov Substitution: subtypes must be substitutable.<br/>
+          <strong>I</strong>nterface Segregation: many small interfaces over one large one.<br/>
+          <strong>D</strong>ependency Inversion: depend on abstractions, not concretions.
+        `
+      },
+      {
+        category: "Clean Architecture",
+        q: "How does Dependency Inversion relate to dependency injection (DI)?",
+        a: `
+          Dependency Inversion dictates depending on abstractions. DI is a mechanism (manual or container) to provide concrete implementations to consumers, enforcing DIP and improving testability.
+        `
+      },
+      {
+        category: "Clean Architecture",
+        q: "Describe typical layers in Clean Architecture and their dependency rules.",
+        a: `
+          Entities (domain), Use Cases (application), Interface Adapters (controllers/ presenters/ gateways), Frameworks & Drivers (UI, DB).<br/>
+          Dependencies point inward only; outer layers depend on inner, never the reverse.
+        `
+      },
+      {
+        category: "Clean Architecture",
+        q: "Modular monolith vs microservices—how to choose?",
+        a: `
+          Start with a <strong>modular monolith</strong> to enforce clear boundaries, reduce operational complexity, and evolve faster.<br/>
+          Move to <strong>microservices</strong> when domain boundaries are stable and you need independent scaling, deployment, or team autonomy.
+        `
+      },
+      {
+        category: "Clean Architecture",
+        q: "Where do use cases live, and what should they avoid knowing?",
+        a: `
+          Use cases live in the application layer; they orchestrate domain objects and policies.<br/>
+          They should not know frameworks, transport (HTTP), UI, or persistence specifics—use interfaces and adapters.
+        `
+      },
+      {
+        category: "Clean Architecture",
+        q: "How do you test Clean Architecture layers effectively?",
+        a: `
+          Unit test entities and use cases with pure in-memory fakes. Contract/integration test adapters and gateways. End-to-end test across the full stack selectively for critical flows.
+        `
+      },
+
+      // --- Version Control (Git) ---
+      {
+        category: "Version Control",
+        q: "GitFlow vs Trunk-Based Development—key differences and trade-offs?",
+        a: `
+          <strong>GitFlow</strong>: long-lived develop/release branches, suitable for scheduled releases and heavy QA.<br/>
+          <strong>Trunk-Based</strong>: short-lived branches merged to main frequently with feature flags, optimizes for CI/CD and fast feedback.<br/>
+          Trade-offs: release control vs velocity/merge complexity.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "What are typical branch protection rules?",
+        a: `
+          Require PR reviews, status checks (CI pass, coverage), signed commits, linear history or squash, restricted who can push, required approvals from CODEOWNERS, no force pushes to protected branches.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "Pull Request best practices?",
+        a: `
+          Keep PRs small and focused, write a clear description, link issues, include tests, follow templates, request targeted reviewers, respond to feedback, and avoid mixing refactors with features unless necessary.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "Outline a CI/CD pipeline for a typical service.",
+        a: `
+          Steps: checkout → cache deps → lint/format → static analysis (SAST) → unit/integration tests → build artifact → security scans (SCA, container) → provision infra (IaC) → deploy to staging → smoke tests → progressive deploy to prod (blue/green or canary) with rollbacks.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "When to use rebase vs merge?",
+        a: `
+          <strong>Rebase</strong> to create a linear history for local/feature branches and keep commit narrative clean.<br/>
+          <strong>Merge</strong> to preserve the true history of integration and when collaboration across many contributors makes rebasing risky.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "What are Conventional Commits and why use them?",
+        a: `
+          A structured commit message format (e.g., <code>feat:</code>, <code>fix:</code>, <code>docs:</code>) enabling automated changelogs, semantic versioning, and easier history navigation.
+        `
+      },
+      {
+        category: "Version Control",
+        q: "How do you approach resolving merge conflicts effectively?",
+        a: `
+          Pull latest main, run a rebase or merge, resolve conflicts locally with awareness of domain intent, run tests, consider pair-resolving tricky conflicts, and push with verified builds.
+        `
+      },
+
+      // --- Documentation & Readability ---
+      {
+        category: "Documentation",
+        q: "Why use docstrings and type hints?",
+        a: `
+          They make intent explicit, improve editor/tooling support (autocomplete, static checks), reduce cognitive load, and enable auto-generated docs and safer refactors.
+        `
+      },
+      {
+        category: "Documentation",
+        q: "How to keep documentation close to code?",
+        a: `
+          Use README per module, ADRs for decisions, inline comments for non-obvious logic, docstrings for APIs, and automate docs from annotations (e.g., Sphinx, JSDoc, TypeDoc, Doxygen). Keep it versioned with the code.
+        `
+      },
+      {
+        category: "Documentation",
+        q: "What improves code readability the most?",
+        a: `
+          Clear naming, small pure functions, consistent style, early returns, avoiding deep nesting, limiting side effects, and separating concerns (SRP). Write code for readers first.
+        `
+      },
+      {
+        category: "Documentation",
+        q: "When are comments useful vs harmful?",
+        a: `
+          Useful: rationale, invariants, performance trade-offs, references to specs/ADR.<br/>
+          Harmful: duplicating obvious code, drifting from reality. Prefer self-descriptive code and keep comments about the “why,” not the “what.”
+        `
+      }
+    ];
+
+    // ======= Utilities and Rendering =======
+    const quizContainer = document.getElementById('quiz');
+    const topicCheckboxes = document.querySelectorAll('.topic-filter');
+    const btnShuffle = document.getElementById('btnShuffle');
+    const btnExpandAll = document.getElementById('btnExpandAll');
+    const btnCollapseAll = document.getElementById('btnCollapseAll');
+    const btnExport = document.getElementById('btnExport');
+
+    function getSelectedTopics() {
+      const selected = new Set();
+      topicCheckboxes.forEach(cb => { if (cb.checked) selected.add(cb.value); });
+      return selected;
+    }
+
+    function shuffleInPlace(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function renderQuiz() {
+      const topics = getSelectedTopics();
+      const filtered = QUESTIONS.filter(item => topics.has(item.category));
+
+      // Build cards
+      let html = '';
+      filtered.forEach((item, idx) => {
+        const answerId = `answer-${item.category.replace(/\s+/g, '-')}-${idx}-${Date.now()}`;
+        html += `
+          <div class="col-12">
+            <div class="quiz-card p-0">
+              <div class="p-3" role="button"
+                   data-bs-toggle="collapse"
+                   data-bs-target="#${answerId}"
+                   aria-expanded="false"
+                   aria-controls="${answerId}">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="quiz-question">${idx + 1}. ${item.q}</div>
+                  <span class="badge bg-light text-dark border topic-badge">${item.category}</span>
+                </div>
+                <!-- Two empty lines for student response -->
+                <div class="write-lines">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+                <div class="small text-muted mt-1">Click to reveal/hide the answer</div>
+              </div>
+              <div id="${answerId}" class="collapse border-top">
+                <div class="p-3">
+                  ${item.a}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      quizContainer.innerHTML = html;
+    }
+
+    function expandAll() {
+      document.querySelectorAll('#quiz .collapse').forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, {toggle: false});
+        c.show();
+      });
+    }
+
+    function collapseAll() {
+      document.querySelectorAll('#quiz .collapse').forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, {toggle: false});
+        c.hide();
+      });
+    }
+
+    // ======= Event bindings =======
+    topicCheckboxes.forEach(cb => cb.addEventListener('change', () => renderQuiz()));
+
+    btnShuffle.addEventListener('click', () => {
+      // Shuffle QUESTIONS in-place and re-render filtered view
+      shuffleInPlace(QUESTIONS);
+      renderQuiz();
+    });
+
+    btnExpandAll.addEventListener('click', expandAll);
+    btnCollapseAll.addEventListener('click', collapseAll);
+
+    btnExport.addEventListener('click', () => {
+      // Ensure answers are closed and excluded before printing
+      collapseAll();
+      // Small timeout to let the DOM update the collapses before print
+      setTimeout(() => window.print(), 150);
+    });
+
+    // Initial render
+    renderQuiz();
+  </script>
+</body>
+</html>

@@ -1,374 +1,463 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Core Python Mastery Quiz</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Python Mastery – Memorization Quiz</title>
 
-<style>
-  :root{
-    --bg:#00000;
-    --card:#0b1220;
-    --accent:#7dd3fc;
-    --muted:#94a3b8;
-    --correct:#10b981;
-    --danger:#fb7185;
-    --glass: rgba(255,255,255,0.03);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  html,body{height:100%}
-  body{
-    margin:0;
-<!--    background:-->
-<!--      radial-gradient(1200px 600px at 10% 10%, rgba(125,211,252,0.06), transparent 10%),-->
-<!--      linear-gradient(180deg, #071029 0%, #071827 100%);-->
-    color: black;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    padding:32px;
-    box-sizing:border-box;
-  }
-  .container{
-    max-width:980px;
-    margin:0 auto;
-  }
-  header{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    margin-bottom:20px;
-  }
-  .logo{
-    width:56px;
-    height:56px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--accent),#60a5fa);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fffff;
-    font-weight:700;
-    box-shadow:0 6px 18px rgba(2,6,23,0.6);
-  }
-  h1{font-size:20px;margin:0}
-  p.lead{margin:6px 0 0;color:var(--muted);font-size:14px}
-  main{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:18px;
-    margin-top:18px;
-  }
-  .card{
-<!--    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));-->
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 6px 18px rgba(2,6,23,0.6);
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  details{
-    background:var(--glass);
-    border-radius:10px;
-    padding:12px;
-    margin:10px 0;
-    border:1px solid rgba(255,255,255,0.02);
-  }
-  summary{
-    list-style:none;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    font-weight:600;
-    color:#fffff;
-  }
-  summary::-webkit-details-marker{display:none}
-  .qmeta{font-size:13px;color:var(--muted);font-weight:500}
-  .answer{
-    margin-top:10px;
-    padding:12px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-    border-radius:8px;
-    color:#fffff;
-    line-height:1.45;
-    border:1px solid rgba(255,255,255,0.02);
-  }
-  .tag{
-    display:inline-block;
-    padding:6px 8px;
-    border-radius:999px;
-    background:rgba(125,211,252,0.08);
-    color: #fffff;
-    font-weight:700;
-    font-size:12px;
-  }
-  .hint{color:var(--muted);font-size:13px;margin-top:8px}
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:12px;
-  }
-  footer{
-    margin-top:12px;
-    color:var(--muted);
-    font-size:13px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-  }
-  .small{
-    font-size:13px;color:var(--muted)
-  }
-  @media (max-width:640px){
-    body{padding:18px}
-    header{gap:12px}
-  }
-</style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="logo">Py</div>
-      <div>
-        <h1>Core Python Mastery Quiz</h1>
-        <p class="lead">Quick recall questions for advanced features, memory, concurrency, and testing</p>
-      </div>
-    </header>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <main>
-      <section class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div class="tag">Advanced language features</div>
-            <div class="hint">Decorators, generators, context managers, closures, metaclasses</div>
-          </div>
-          <div class="small">Flip each card to reveal answer</div>
-        </div>
+  <style>
+    :root {
+      --card-border: #dee2e6;
+      --muted: #6c757d;
+    }
 
-        <details>
-          <summary>
-            <span>Q1. What is a decorator and how is it typically used</span>
-            <span class="qmeta">Short answer</span>
-          </summary>
-          <div class="answer">
-            **Answer:** A decorator is a callable that takes a function or class and returns a modified function or class. It's commonly used to add behavior like logging, access control, or caching without changing the original function body.
-            <div class="hint">Example: `@functools.wraps` preserves metadata; `@cache` adds memoization.</div>
-          </div>
-        </details>
+    /* Keep white background for screen and print */
+    html, body {
+      background: #ffffff !important;
+      color: #212529;
+    }
 
-        <details>
-          <summary>
-            <span>Q2. How do generators differ from normal functions</span>
-            <span class="qmeta">Key idea</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Generators use `yield` to produce a sequence of values lazily, maintaining state between yields. They are memory-efficient for large sequences and can be iterated like iterators.
-            <div class="hint">Use `next()` or `for` loops; `yield from` delegates to subgenerators.</div>
-          </div>
-        </details>
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+    }
 
-        <details>
-          <summary>
-            <span>Q3. What is a context manager and how to implement one</span>
-            <span class="qmeta">Pattern</span>
-          </summary>
-          <div class="answer">
-            **Answer:** A context manager defines setup and teardown around a block using `with`. Implement via a class with `__enter__` and `__exit__` or a generator decorated with `@contextlib.contextmanager`.
-            <div class="hint">`__exit__` handles exceptions; return value of `__enter__` is bound to the `as` target.</div>
-          </div>
-        </details>
+    .quiz-card {
+      border: 1px solid var(--card-border);
+      border-radius: .5rem;
+    }
 
-        <details>
-          <summary>
-            <span>Q4. Define closure and give a use case</span>
-            <span class="qmeta">Concept</span>
-          </summary>
-          <div class="answer">
-            **Answer:** A closure is a function that captures variables from its enclosing scope, preserving them after the outer function returns. Use closures for factory functions or to maintain private state without classes.
-            <div class="hint">Captured variables are read-only unless declared `nonlocal`.</div>
-          </div>
-        </details>
+    .quiz-question {
+      font-weight: 600;
+    }
 
-        <details>
-          <summary>
-            <span>Q5. What are metaclasses and when to use them</span>
-            <span class="qmeta">Advanced</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Metaclasses control class creation (they are the class of a class). Use them to enforce class invariants, auto-register subclasses, or modify attributes at class creation time.
-            <div class="hint">Default metaclass is `type`; override `__new__` or `__init__` in a metaclass.</div>
-          </div>
-        </details>
-      </section>
+    .topic-badge {
+      font-size: 0.75rem;
+    }
 
-      <section class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div class="tag">Memory management</div>
-            <div class="hint">Garbage collection, profiling, optimization</div>
-          </div>
-          <div class="small">Test your recall</div>
-        </div>
+    .controls .btn {
+      margin-right: .5rem;
+      margin-bottom: .5rem;
+    }
 
-        <details>
-          <summary>
-            <span>Q6. How does Python garbage collection work</span>
-            <span class="qmeta">Mechanism</span>
-          </summary>
-          <div class="answer">
-            **Answer:** CPython uses reference counting plus a cyclic garbage collector to detect and collect reference cycles. Objects are freed when reference count drops to zero; cycles are handled by the GC generations.
-            <div class="hint">Use `gc` module to inspect or tune collection; watch for __del__ interactions.</div>
-          </div>
-        </details>
+    .muted {
+      color: var(--muted);
+    }
 
-        <details>
-          <summary>
-            <span>Q7. Name two profiling tools and when to use them</span>
-            <span class="qmeta">Tools</span>
-          </summary>
-          <div class="answer">
-            **Answer:** `cProfile` for deterministic function-level profiling; `line_profiler` for line-by-line hotspots. Use `memory_profiler` to track memory usage.
-            <div class="hint">Combine profiling with representative workloads for accurate results.</div>
-          </div>
-        </details>
+    /* Two ruled lines for student answers */
+    .write-lines {
+      padding: .5rem 0 0.25rem 0;
+    }
+    .write-lines .line {
+      border-bottom: 1px dotted #adb5bd;
+      height: 1.75rem; /* space to handwrite or type */
+      margin-top: .35rem;
+    }
 
-        <details>
-          <summary>
-            <span>Q8. Give one optimization technique for Python code</span>
-            <span class="qmeta">Practical</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Use algorithmic improvements first (better data structures), then reduce allocations (reuse objects), use built-in functions and comprehensions, and consider C extensions or PyPy for heavy workloads.
-            <div class="hint">Profile before optimizing; micro-optimizations often have limited impact.</div>
-          </div>
-        </details>
-      </section>
+    /* Print rules: answers hidden, controls hidden, white background, neat borders */
+    @media print {
 
-      <section class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div class="tag">Concurrency and parallelism</div>
-            <div class="hint">threading, multiprocessing, asyncio, event-driven</div>
-          </div>
-          <div class="small">Match concepts to use cases</div>
-        </div>
-
-        <details>
-          <summary>
-            <span>Q9. When is threading appropriate in Python</span>
-            <span class="qmeta">Use case</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Threading is suitable for I/O-bound tasks where the Global Interpreter Lock (GIL) is not a bottleneck, such as network requests or file I/O. For CPU-bound tasks, prefer multiprocessing.
-            <div class="hint">Use `concurrent.futures.ThreadPoolExecutor` for simpler thread pools.</div>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>Q10. What does asyncio provide and when to use it</span>
-            <span class="qmeta">Async</span>
-          </summary>
-          <div class="answer">
-            **Answer:** `asyncio` provides an event loop and async/await syntax for cooperative concurrency. Use it for high-concurrency I/O-bound applications like web servers or clients.
-            <div class="hint">Combine with `aiohttp` for async HTTP; avoid blocking calls inside async code.</div>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>Q11. How does multiprocessing differ from threading</span>
-            <span class="qmeta">Difference</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Multiprocessing runs separate Python processes with independent memory, bypassing the GIL and enabling true parallel CPU-bound work. Communication uses IPC like queues or pipes.
-            <div class="hint">Process startup cost is higher; use `multiprocessing.Pool` for worker pools.</div>
-          </div>
-        </details>
-      </section>
-
-      <section class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div class="tag">Error handling and testing</div>
-            <div class="hint">Exceptions, unit tests, integration tests</div>
-          </div>
-          <div class="small">Practice robust patterns</div>
-        </div>
-
-        <details>
-          <summary>
-            <span>Q12. Best practice for exception handling</span>
-            <span class="qmeta">Pattern</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Catch specific exceptions, avoid bare `except:`, clean up resources in `finally` or use context managers, and fail fast with clear error messages. Log exceptions with context.
-            <div class="hint">Use custom exception types for domain-specific errors.</div>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>Q13. Unit testing vs integration testing</span>
-            <span class="qmeta">Compare</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Unit tests verify small, isolated units (functions/classes) often with mocks. Integration tests verify interactions between components and external systems. Both are essential.
-            <div class="hint">Use `pytest` for expressive tests and fixtures; run integration tests in CI with realistic environments.</div>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>Q14. How to test async code with pytest</span>
-            <span class="qmeta">Technique</span>
-          </summary>
-          <div class="answer">
-            **Answer:** Use `pytest` with `pytest-asyncio` or `anyio` to write `async def` tests and run them on an event loop. Use fixtures to set up async resources.
-            <div class="hint">Mark tests with `@pytest.mark.asyncio` or use `asyncio` fixtures provided by plugins.</div>
-          </div>
-        </details>
-      </section>
-    </main>
-    <button class="btn btn-success btn-export" onclick="exportToPDF()">Export to PDF</button>
-
-
-    <footer>
-      <div class="small">Study tip: try answering aloud before revealing each answer</div>
-      <div class="small">Created for Core Python Mastery topics</div>
-    </footer>
-  </div>
-  <script>
-
-  function exportToPDF() {
-    const element = document.body; // or a specific container
-
-    const options = {
-      margin: [10, 10], // mm
-      filename: 'core_python_mastery_quiz.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        windowWidth: document.documentElement.scrollWidth,
-        // 👇 This is the key: skip anything inside .answer
-        ignoreElements: (el) => {
-          // guard against nodes without .closest
-          if (!el || typeof el.closest !== 'function') return false;
-          return !!el.closest('.answer');
+      html {
+          font-size: 12px; /* try 11px or 10.5px if you need smaller */
         }
+
+      @page {
+        size: auto;
+        margin: 12mm;
+      }
+      body {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      /* Hide all controls and sticky header */
+      .no-print,
+      .page-header {
+        display: none !important;
+      }
+      /* Force answers to hide even if expanded */
+      .collapse,
+      .collapse.show {
+        display: none !important;
+      }
+      /* Ensure borders print clearly */
+      .quiz-card {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+      }
+      /* Avoid printing link URLs after anchors */
+      a[href]:after {
+        content: "" !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <header class="page-header">
+    <div class="container py-3">
+      <h1 class="h3 mb-0">Core Python Mastery – Memorization Quiz</h1>
+      <small class="text-muted">Click a question to reveal the answer. Two lines are provided for your attempt. Answers are <strong>excluded</strong> when exporting to PDF.</small>
+    </div>
+  </header>
+
+  <main class="container my-4">
+    <!-- Controls -->
+    <section class="controls no-print mb-3">
+      <div class="d-flex flex-wrap justify-content-start">
+        <button id="btnShuffle" class="btn btn-outline-secondary">Shuffle</button>
+        <button id="btnExpandAll" class="btn btn-outline-primary">Expand all answers</button>
+        <button id="btnCollapseAll" class="btn btn-outline-primary">Collapse all answers</button>
+        <button id="btnExport" class="btn btn-success">Export to PDF</button>
+      </div>
+    </section>
+
+    <!-- Quiz container -->
+    <section id="quiz" class="row g-3">
+      <!-- Cards injected by JS -->
+    </section>
+
+    <p class="mt-3 muted">
+      Tip: Try answering on the two lines first, then reveal the solution. “Export to PDF” hides answers by design.
+    </p>
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ======= Data: Questions & Answers =======
+    // category ∈ { "Advanced Features", "Memory Management", "Concurrency & Parallelism", "Error Handling & Testing" }
+    const QUESTIONS = [
+      // --- Advanced language features ---
+      {
+        category: "Advanced Features",
+        q: "What is a decorator in Python? Show a simple example and explain why functools.wraps is important.",
+        a: `
+          A decorator is a callable that takes a function and returns a function, letting you add cross-cutting behavior (logging, caching, auth) without changing the original function.<br/><br/>
+          <pre class="mb-2"><code>from functools import wraps
+def log_calls(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        print(f"Calling {fn.__name__} with {args}, {kwargs}")
+        return fn(*args, **kwargs)
+    return wrapper
+
+@log_calls
+def add(a, b): return a + b
+</code></pre>
+          <strong>functools.wraps</strong> preserves metadata (name, docstring, annotations) so tooling and introspection work correctly (e.g., help(), __name__, decorators stacking).
+        `
       },
-      // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      // pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    };
+      {
+        category: "Advanced Features",
+        q: "How do generators differ from iterators? Include yield, yield from, and advantages.",
+        a: `
+          An <strong>iterator</strong> implements <code>__iter__</code> and <code>__next__</code>. A <strong>generator</strong> is an iterator created by a function using <code>yield</code>—it saves state between yields.<br/>
+          <code>yield from</code> delegates to a sub-iterator, flattening nested loops and propagating return values.<br/>
+          Advantages: lazy evaluation, low memory footprint for large/streaming data, composability via generator pipelines.
+        `
+      },
+      {
+        category: "Advanced Features",
+        q: "Explain context managers. Show both __enter__/__exit__ and @contextmanager patterns.",
+        a: `
+          Context managers manage setup/teardown around a block (e.g., open files, locks, transactions).<br/><br/>
+          Class-based:<br/>
+          <pre class="mb-2"><code>class Locker:
+    def __enter__(self): lock.acquire(); return resource
+    def __exit__(self, exc_type, exc, tb): lock.release(); return False
+</code></pre>
+          Decorator-based:<br/>
+          <pre class="mb-2"><code>from contextlib import contextmanager
+@contextmanager
+def managed():
+    setup()
+    try: yield resource
+    finally: teardown()
+</code></pre>
+          <code>__exit__</code> may suppress exceptions by returning True, but use carefully.
+        `
+      },
+      {
+        category: "Advanced Features",
+        q: "What is a closure? Demonstrate late binding gotcha and a fix.",
+        a: `
+          A closure captures variables from the enclosing scope and keeps them alive after the outer function returns.<br/><br/>
+          Late binding gotcha (all lambdas capture same i):<br/>
+          <pre class="mb-2"><code>funcs = [lambda: i for i in range(3)]  # all return 2
+</code></pre>
+          Fix via default arg or local binding:<br/>
+          <pre class="mb-2"><code>funcs = [lambda i=i: i for i in range(3)]
+</code></pre>
+        `
+      },
+      {
+        category: "Advanced Features",
+        q: "What are metaclasses used for? Give a practical example.",
+        a: `
+          Metaclasses customize class creation (like how classes create instances). Use cases: enforcing APIs, automatic registration, adding attributes, or validating class definitions.<br/><br/>
+          <pre class="mb-2"><code>class Registry(type):
+    registry = {}
+    def __new__(mcls, name, bases, ns):
+        cls = super().__new__(mcls, name, bases, ns)
+        if not name.startswith('_'): mcls.registry[name] = cls
+        return cls
 
-    html2pdf().set(options).from(element).save();
-  }
+class Service(metaclass=Registry): pass
+class EmailService(Service): pass
+# Registry.registry now contains {'Service': Service, 'EmailService': EmailService}
+</code></pre>
+        `
+      },
 
+      // --- Memory Management ---
+      {
+        category: "Memory Management",
+        q: "How does Python manage memory? Explain ref counting and cyclic GC; any caveats?",
+        a: `
+          CPython uses <strong>reference counting</strong> for immediate reclamation and a <strong>cyclic garbage collector</strong> to break reference cycles in container objects.<br/>
+          Caveats: objects with <code>__del__</code> in cycles may be left in <em>gc.garbage</em>; refcounts are implementation-specific; large object graphs can delay cycle collection.
+        `
+      },
+      {
+        category: "Memory Management",
+        q: "Show built-in tools to profile memory usage.",
+        a: `
+          <ul>
+            <li><code>tracemalloc</code>: track allocations, snapshots, and diffs.</li>
+            <li><code>sys.getsizeof(obj)</code>: shallow size (excludes referents).</li>
+            <li><code>gc.get_objects()</code>, <code>gc.get_stats()</code>: inspect GC state.</li>
+          </ul>
+          <pre class="mb-2"><code>import tracemalloc
+tracemalloc.start()
+# ... run code ...
+current, peak = tracemalloc.get_traced_memory()
+print(current, peak)
+</code></pre>
+        `
+      },
+      {
+        category: "Memory Management",
+        q: "Name techniques to reduce memory footprint in Python.",
+        a: `
+          Prefer generators/iterators over lists for streams, use <code>__slots__</code> to avoid per-instance dict, choose compact structures (array/bytes/tuple), reuse objects, clear caches, and slice/iterate in chunks. Avoid holding entire datasets in memory when you can stream.
+        `
+      },
+      {
+        category: "Memory Management",
+        q: "When and why would you use weak references?",
+        a: `
+          Use <code>weakref</code> to reference objects without increasing refcount, allowing GC when no strong refs remain. Useful for caches, observer registries, or graphs where you don't own object lifetimes.
+        `
+      },
+      {
+        category: "Memory Management",
+        q: "How do you detect and debug memory leaks?",
+        a: `
+          Monitor RSS and object counts; use <code>tracemalloc</code> snapshots diffs; inspect <code>gc.get_referrers()</code> for unexpected owners; check for lingering globals/singletons, reference cycles with <code>__del__</code>, and long-lived closures.
+        `
+      },
+
+      // --- Concurrency & Parallelism ---
+      {
+        category: "Concurrency & Parallelism",
+        q: "Threading vs multiprocessing vs asyncio—when to use each given the GIL?",
+        a: `
+          <strong>Threading</strong>: good for I/O-bound tasks (network/disk) where threads can overlap waits; limited for CPU-bound due to GIL.<br/>
+          <strong>Multiprocessing</strong>: sidesteps GIL by using separate processes; good for CPU-bound; higher startup and IPC overhead.<br/>
+          <strong>asyncio</strong>: single-threaded concurrency with <code>await</code> for I/O-bound tasks at scale; cooperative scheduling.
+        `
+      },
+      {
+        category: "Concurrency & Parallelism",
+        q: "Show basic asyncio usage: creating tasks and waiting for them.",
+        a: `
+          <pre class="mb-2"><code>import asyncio
+
+async def work(i):
+    await asyncio.sleep(0.1)
+    return i*i
+
+async def main():
+    tasks = [asyncio.create_task(work(i)) for i in range(5)]
+    results = await asyncio.gather(*tasks)
+    print(results)
+
+asyncio.run(main())
+</code></pre>
+          Use <code>create_task</code> to schedule concurrently; <code>gather</code> to await multiple tasks; prefer timeouts/backpressure to avoid overload.
+        `
+      },
+      {
+        category: "Concurrency & Parallelism",
+        q: "What are common thread-safety primitives and patterns in Python?",
+        a: `
+          <ul>
+            <li><code>threading.Lock</code>, <code>RLock</code>, <code>Semaphore</code>, <code>Event</code>, <code>Condition</code></li>
+            <li>Message passing via <code>queue.Queue</code> (producer/consumer)</li>
+            <li><code>concurrent.futures</code> executors abstract pools</li>
+          </ul>
+          Prefer immutable data or confinement; minimize shared state; wrap critical sections with locks.
+        `
+      },
+      {
+        category: "Concurrency & Parallelism",
+        q: "What pitfalls exist with multiprocessing (pickling, data transfer)?",
+        a: `
+          Functions and arguments must be pickleable; large payloads cause IPC overhead and copy cost; beware fork on Unix vs spawn on Windows; use shared memory (<code>multiprocessing.shared_memory</code>) or memory-mapped files for large arrays; avoid global initializations in workers unless intentional.
+        `
+      },
+      {
+        category: "Concurrency & Parallelism",
+        q: "Explain event-driven programming in Python.",
+        a: `
+          Architect around events/callbacks rather than blocking calls: use <code>asyncio</code> event loop, callbacks, and IO multiplexing; integrate with frameworks (e.g., websockets, aiohttp). In GUIs (Tkinter, Qt), the main loop dispatches events to handlers; never block the loop—offload CPU work to executors.
+        `
+      },
+
+      // --- Error Handling & Testing ---
+      {
+        category: "Error Handling & Testing",
+        q: "What are best practices for exception handling and custom exceptions?",
+        a: `
+          Catch the narrowest exception; don't swallow errors silently; use <code>finally</code> for cleanup; raise domain-specific custom exceptions inheriting from <code>Exception</code>; include context and avoid using exceptions for normal control flow.
+        `
+      },
+      {
+        category: "Error Handling & Testing",
+        q: "How to write effective unit tests with pytest or unittest?",
+        a: `
+          Follow Arrange–Act–Assert; keep tests small and isolated; use fixtures/factories; parametrize to cover cases; assert on behavior not implementation; name tests clearly; ensure deterministic results and fast feedback.
+        `
+      },
+      {
+        category: "Error Handling & Testing",
+        q: "Demonstrate asserting exceptions in tests (pytest and unittest).",
+        a: `
+          <pre class="mb-2"><code># pytest
+import pytest
+def div(a, b): return a/b
+def test_raises():
+    with pytest.raises(ZeroDivisionError):
+        div(1, 0)
+
+# unittest
+import unittest
+class T(unittest.TestCase):
+    def test_raises(self):
+        with self.assertRaises(ZeroDivisionError):
+            div(1, 0)
+</code></pre>
+        `
+      },
+      {
+        category: "Error Handling & Testing",
+        q: "What is integration testing and how do you approach it in Python?",
+        a: `
+          Integration tests validate components together (DB, network, services). Use realistic environments (Docker, local test DB), seed fixtures, and run setup/teardown. Stub external services with mocks or sandbox endpoints; verify behavior and contracts, not just unit internals.
+        `
+      },
+      {
+        category: "Error Handling & Testing",
+        q: "How do typing and docstrings aid reliability and testing?",
+        a: `
+          Type hints enable static analysis (mypy/pyright) and better IDE help; docstrings clarify intent and usage. Together they reduce ambiguity, prevent bugs, improve auto-generated docs, and support safer refactors.
+        `
+      }
+    ];
+
+    // ======= Rendering & Utilities =======
+    const quizContainer = document.getElementById('quiz');
+    const btnShuffle = document.getElementById('btnShuffle');
+    const btnExpandAll = document.getElementById('btnExpandAll');
+    const btnCollapseAll = document.getElementById('btnCollapseAll');
+    const btnExport = document.getElementById('btnExport');
+
+    function shuffleInPlace(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function renderQuiz() {
+      let html = '';
+      const nowSeed = Date.now(); // keep ids unique after shuffles
+      QUESTIONS.forEach((item, idx) => {
+        const answerId = `answer-${item.category.replace(/\s+/g, '-')}-${idx}-${nowSeed}`;
+        html += `
+          <div class="col-12">
+            <div class="quiz-card p-0">
+              <div class="p-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="quiz-question">${idx + 1}. ${item.q}</div>
+                  <span class="badge bg-light text-dark border topic-badge">${item.category}</span>
+                </div>
+                <!-- Two empty lines for student response -->
+                <div class="write-lines">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+                <div class="small text-muted mt-2">
+                  Click below to reveal/hide the answer
+                </div>
+                <div class="mt-2">
+                  <button class="btn btn-sm btn-outline-secondary"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#${answerId}"
+                          aria-expanded="false"
+                          aria-controls="${answerId}">
+                    Show/Hide Answer
+                  </button>
+                </div>
+              </div>
+              <div id="${answerId}" class="collapse border-top">
+                <div class="p-3">
+                  ${item.a}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      quizContainer.innerHTML = html;
+    }
+
+    function expandAll() {
+      document.querySelectorAll('#quiz .collapse').forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, {toggle: false});
+        c.show();
+      });
+    }
+
+    function collapseAll() {
+      document.querySelectorAll('#quiz .collapse').forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, {toggle: false});
+        c.hide();
+      });
+    }
+
+    // ======= Events =======
+    btnShuffle.addEventListener('click', () => { shuffleInPlace(QUESTIONS); renderQuiz(); });
+    btnExpandAll.addEventListener('click', expandAll);
+    btnCollapseAll.addEventListener('click', collapseAll);
+    btnExport.addEventListener('click', () => {
+      // Ensure answers are closed before printing (also hidden by print CSS)
+      collapseAll();
+      setTimeout(() => window.print(), 150);
+    });
+
+    // Initial render
+    renderQuiz();
   </script>
 </body>
 </html>

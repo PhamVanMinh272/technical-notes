@@ -19,3 +19,24 @@ interviews.forEach(interview => {
 
   list.appendChild(li);
 });
+
+// Quiz
+const quiz = [
+  { title: "Core Python Mastery Quiz", file: "core-python-mastery-quiz.html" },
+  { title: "Software Engineering Skills Quiz", file: "software-engineering-skills-quiz.html" },
+//  { title: "Interview with Charlie", file: "interviews/interview3.html" }
+];
+
+// Render list dynamically
+const quiz_list = document.getElementById("quiz-list");
+quiz.forEach(q => {
+  const li = document.createElement("li");
+  li.className = "list-group-item";
+  li.textContent = q.title;
+
+  li.addEventListener("click", () => {
+    window.location.href = q.file;
+  });
+
+  quiz_list.appendChild(li);
+});
