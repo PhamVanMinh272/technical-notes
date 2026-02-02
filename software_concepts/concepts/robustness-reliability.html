@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Robustness vs Reliability — A4 Handout</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --page-font: 12px;
+      --heading-font: 14px;
+      --line-height: 1.25;
+      --page-padding-mm: 12mm;
+    }
+    body {
+      background: #f8f9fa;
+      padding: 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .pdf-page {
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.03);
+      font-size: var(--page-font);
+      line-height: var(--line-height);
+      color: #222;
+    }
+    .pdf-page h1, .pdf-page h2, .pdf-page h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .pdf-page h1 { font-size: 1.15rem; }
+    .pdf-page h3 { font-size: var(--heading-font); }
+    .card { margin-bottom: 0.8rem; border: none; }
+    .card-body { padding: 0.6rem 0.75rem; }
+    table.table-sm { font-size: 11px; margin-bottom: 0; }
+    ul, ol { margin-bottom: 0.5rem; padding-left: 1.05rem; }
+    footer { margin-top: 10px; font-size: 11px; color: #6c757d; }
+
+    /* Print / PDF friendly A4 sizing */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .no-print { display: none !important; }
+      .pdf-page {
+        box-shadow: none;
+        margin: 0;
+        padding: var(--page-padding-mm);
+        font-size: var(--page-font);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h5 mb-0">Robustness vs Reliability — A4 Handout</h1>
+      <div class="no-print">
+        <button id="exportPdf" class="btn btn-primary btn-sm">Export to PDF</button>
+        <button id="printBtn" class="btn btn-outline-secondary btn-sm">Print</button>
+      </div>
+    </div>
+
+    <div id="contentToExport" class="pdf-page">
+      <div class="card">
+        <div class="card-body">
+          <h3>Definitions</h3>
+          <p><strong>Robustness</strong> — ability to tolerate unexpected inputs, environmental variation, or partial failures without catastrophic behavior.</p>
+          <p><strong>Reliability</strong> — probability the system performs its required function without failure for a specified period under stated conditions (e.g., uptime, MTBF).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Side by Side Comparison</h3>
+          <table class="table table-sm">
+            <thead>
+              <tr><th>Attribute</th><th>Robustness</th><th>Reliability</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Focus</strong></td><td>Handling unexpected conditions</td><td>Consistent correct operation over time</td></tr>
+              <tr><td><strong>Measured by</strong></td><td>Fault tolerance; error handling success</td><td>MTBF; uptime; failure rate</td></tr>
+              <tr><td><strong>Typical tests</strong></td><td>Fuzzing; stress; fault injection</td><td>Long‑run load tests; availability monitoring</td></tr>
+              <tr><td><strong>Design levers</strong></td><td>Defensive coding; input validation; isolation</td><td>Redundancy; monitoring; maintenance</td></tr>
+              <tr><td><strong>Outcome under stress</strong></td><td>Degrades gracefully or isolates faults</td><td>Maintains service levels via redundancy</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Practical Interaction</h3>
+          <ul>
+            <li><strong>Robustness reduces unexpected failures</strong>, which improves observed reliability.</li>
+            <li><strong>Reliability engineering</strong> ensures predictable availability through redundancy and monitoring.</li>
+            <li>Both are complementary: robust components make reliability measures easier to achieve and maintain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>When to Prioritize</h3>
+          <ul>
+            <li><strong>Robustness</strong> — prioritize when inputs are untrusted, environments vary, or safety is critical.</li>
+            <li><strong>Reliability</strong> — prioritize when continuous availability and SLAs matter.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Testing Checklist</h3>
+          <ol>
+            <li>Run fuzzing and fault injection to validate robustness.</li>
+            <li>Execute long‑duration load and availability tests for reliability metrics.</li>
+            <li>Monitor production for error rates, MTBF, and uptime; iterate on both design and operations.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById('exportPdf').addEventListener('click', function () {
+      const element = document.getElementById('contentToExport');
+      const opt = {
+        margin:       12,
+        filename:     'robustness-vs-reliability.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    });
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+  </script>
+</body>
+</html>

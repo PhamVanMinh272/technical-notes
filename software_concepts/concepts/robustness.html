@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Robust Exception Handling — Printable Guide</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background:#f8f9fa; padding:20px; }
+    .card { margin-bottom:1rem; }
+    .pdf-page {
+      background:#fff;
+      padding:20px;
+      border-radius:6px;
+      box-shadow:0 0 0 1px rgba(0,0,0,0.03);
+      /* Smaller export font size */
+      font-size: 12px;
+      line-height: 1.25;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    .pdf-page h3 { font-size: 1.05rem; margin-top:0; }
+    .pdf-page h1, .pdf-page h2 { font-size: 1.1rem; }
+    /* Table and list adjustments for denser layout */
+    .pdf-page table { font-size: 11.5px; }
+    .pdf-page ul, .pdf-page ol { margin-bottom:0.5rem; }
+    /* Print / PDF friendly A4 sizing */
+    @media print {
+      body { background: #fff; }
+      .no-print { display:none !important; }
+      .pdf-page { box-shadow:none; margin:0; padding:12mm; font-size:12px; line-height:1.25; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4">Robust Exception Handling — Quick Guide</h1>
+      <div class="no-print">
+        <button id="exportPdf" class="btn btn-primary">Export to PDF</button>
+        <button id="printBtn" class="btn btn-outline-secondary">Print</button>
+      </div>
+    </div>
+
+    <div id="contentToExport" class="pdf-page">
+      <div class="card">
+        <div class="card-body">
+          <h3>What is Robust Exception Handling</h3>
+          <p><strong>Robust exception handling</strong> is the practice of anticipating, catching, and managing runtime errors so applications fail safely, recover when possible, and provide clear diagnostics.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Key Principles</h3>
+          <ul>
+            <li><strong>Anticipate errors</strong> — validate inputs and identify failure points.</li>
+            <li><strong>Graceful recovery</strong> — retries, fallbacks, and safe degradation.</li>
+            <li><strong>Clear communication</strong> — user-friendly messages and developer logs.</li>
+            <li><strong>Consistency</strong> — centralized/global handlers or middleware.</li>
+            <li><strong>Avoid silent failures</strong> — always log or surface important errors.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Best Practices</h3>
+          <ol>
+            <li><strong>Catch only what you can handle</strong> — don’t swallow exceptions.</li>
+            <li><strong>Log with context</strong> — include stack, user id, request id.</li>
+            <li><strong>Use retries and circuit breakers</strong> for transient failures.</li>
+            <li><strong>Fail fast in dev, fail safe in prod</strong> — surface issues during testing; protect users in production.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3>Common Exception Types</h3>
+          <table class="table table-sm">
+            <thead><tr><th>Type</th><th>Description</th><th>Examples</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Checked</strong></td><td>Must be handled or declared</td><td>IO, SQL</td></tr>
+              <tr><td><strong>Unchecked</strong></td><td>Runtime programming errors</td><td>Null refs, index errors</td></tr>
+              <tr><td><strong>System Errors</strong></td><td>Severe, often unrecoverable</td><td>OutOfMemory</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById('exportPdf').addEventListener('click', function () {
+      const element = document.getElementById('contentToExport');
+      const opt = {
+        margin:       12,
+        filename:     'robust-exception-handling.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    });
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+  </script>
+</body>
+</html>
