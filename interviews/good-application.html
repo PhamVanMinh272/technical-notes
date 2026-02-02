@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Good Software — Developer Aspects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <style>
+    /* Base styles */
+    body {
+      background-color: #f8f9fa;
+    }
+    .page {
+      max-width: 900px;
+      margin: 24px auto;
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .page-header {
+      padding: 24px 24px 8px 24px;
+      border-bottom: 1px solid #f1f3f5;
+    }
+    .page-actions {
+      padding: 12px 24px 0 24px;
+    }
+    .page-body {
+      padding: 16px 24px 24px 24px;
+    }
+    .badge-pill {
+      border-radius: 999px;
+    }
+    /* Table tweaks for density and readability */
+    table.table {
+      font-size: 0.96rem;
+    }
+    table.table th, table.table td {
+      vertical-align: top;
+      padding: 0.5rem 0.6rem;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 10mm; /* tight margins for compact PDF */
+    }
+    @media print {
+      /* Make everything compact */
+      body {
+        background: #fff !important;
+      }
+      .page {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .page-header {
+        padding: 8px 0 4px 0 !important;
+        border: none !important;
+      }
+      .page-actions {
+        display: none !important; /* hide buttons on print */
+      }
+      .page-body {
+        padding: 0 !important;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0 0 4px 0 !important;
+      }
+      /* Smaller font for print */
+      html, body, table {
+        font-size: 10px !important; /* small font-size for print */
+        line-height: 1.25 !important;
+      }
+      .table > :not(caption) > * > * {
+        padding: 4px 6px !important; /* tighter cells */
+      }
+      /* Remove colors that don't print well */
+      .badge {
+        border: 1px solid #444 !important;
+        color: #000 !important;
+        background: transparent !important;
+      }
+      .text-muted {
+        color: #000 !important;
+      }
+      /* Avoid page breaks inside a row */
+      tr, td, th {
+        page-break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="page-header">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <h1 class="h3 mb-1">Good Software — Developer Aspects</h1>
+          <div class="text-muted">Quick reference for interviews, design reviews, and team onboarding</div>
+        </div>
+        <div class="page-actions">
+          <button id="btnExport" class="btn btn-primary btn-sm">
+            <span class="me-1">📄</span> Export to PDF
+          </button>
+        </div>
+      </div>
+      <div class="mt-3">
+        <span class="badge text-bg-light border badge-pill me-1">Maintainable</span>
+        <span class="badge text-bg-light border badge-pill me-1">Scalable</span>
+        <span class="badge text-bg-light border badge-pill me-1">Reliable</span>
+        <span class="badge text-bg-light border badge-pill me-1">Testable</span>
+        <span class="badge text-bg-light border badge-pill me-1">Performant</span>
+        <span class="badge text-bg-light border badge-pill me-1">Well-documented</span>
+        <span class="badge text-bg-light border badge-pill me-1">Secure</span>
+        <span class="badge text-bg-light border badge-pill">Modular</span>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 16%">Aspect</th>
+              <th style="width: 44%">Definition</th>
+              <th style="width: 40%">Practical signals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Maintainable</strong></td>
+              <td>Easy to read, understand, and change without fear of regressions.</td>
+              <td>
+                Consistent style, clear naming, code reviews, linters, low cyclomatic complexity, clear boundaries.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Scalable</strong></td>
+              <td>Grows gracefully with users, data, and features without major rewrites.</td>
+              <td>
+                Horizontal scaling paths, stateless services, efficient DB access, caching, idempotent ops, back-pressure.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Reliable</strong></td>
+              <td>Functions correctly and consistently under expected conditions.</td>
+              <td>
+                SLOs/SLAs, health checks, retries with jitter, circuit breakers, graceful degradation, error budgets.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Testable</strong></td>
+              <td>Designed so automated tests are easy to write and run.</td>
+              <td>
+                DI-friendly, pure functions, seamful design, fast unit tests, CI pipelines, contract & E2E tests.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Performant</strong></td>
+              <td>Uses resources efficiently with quick responses.</td>
+              <td>
+                Profiling, APM traces, O(n) awareness, async where needed, pagination, lazy loading, memory discipline.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Well‑documented</strong></td>
+              <td>Clear docs for developers and future contributors.</td>
+              <td>
+                README with setup/run, ADRs, API specs, runbooks, onboarding guides, comments where it adds context.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Secure</strong></td>
+              <td>Protects data and resists common vulnerabilities.</td>
+              <td>
+                Least privilege, secret management, dependency scanning, input validation, TLS, authn/z, threat modeling.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Modular</strong></td>
+              <td>Loosely coupled, highly cohesive components that are reusable.</td>
+              <td>
+                Clear interfaces, bounded contexts, small surfaces, versioned contracts, dependency inversion.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Optional concise list view -->
+      <div class="mt-3">
+        <small class="text-muted">Concise view:</small>
+        <ul class="mb-0">
+          <li>Maintainable • Scalable • Reliable • Testable • Performant • Well‑documented • Secure • Modular</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional, for button style only) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <script>
+    // Export to PDF via browser print dialog
+    document.getElementById('btnExport').addEventListener('click', () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>
