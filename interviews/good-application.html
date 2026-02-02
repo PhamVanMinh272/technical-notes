@@ -6,48 +6,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Bootstrap 5 (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
 
   <style>
-    /* Base styles */
-    body { background-color: #f8f9fa; }
-    .page {
-      max-width: 900px;
-      margin: 24px auto;
-      background: #fff;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    /* Base: Screen */
+    :root {
+      --page-max: 900px;
+      --screen-bg: #f8f9fa;
+      --border: #e6e6e6;
+      --muted: #6c757d;
     }
-    .page-header { padding: 24px 24px 8px 24px; border-bottom: 1px solid #f1f3f5; }
-    .page-actions { padding: 12px 24px 0 24px; }
-    .page-body { padding: 16px 24px 24px 24px; }
+    body {
+      background-color: var(--screen-bg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    .page {
+      max-width: var(--page-max);
+      margin: 28px auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .page-header {
+      padding: 28px 28px 10px 28px;
+      border-bottom: 1px solid #f1f3f5;
+    }
+    .page-actions {
+      padding-top: 6px;
+    }
+    .page-body {
+      padding: 18px 28px 28px 28px;
+    }
     .badge-pill { border-radius: 999px; }
 
-    /* Table tweaks for density and readability */
-    table.table { font-size: 0.96rem; }
-    table.table th, table.table td { vertical-align: top; padding: 0.5rem 0.6rem; }
+    /* Content spacing */
+    .section + .section { margin-top: 24px; }
+    .section-title { margin: 0 0 8px 0; }
+    .subtle { color: var(--muted); }
 
-    /* Cards spacing */
-    .section-title { margin-top: 16px; margin-bottom: 6px; }
+    /* Table: cleaner and more relaxed on screen */
+    table.table {
+      font-size: 1rem;
+      border-color: var(--border);
+    }
+    table.table th, table.table td {
+      vertical-align: top;
+      padding: 10px 12px;
+    }
 
-    /* Print styles */
-    @page { size: A4; margin: 10mm; } /* tight margins for compact PDF */
+    /* Print styles: relaxed layout */
+    @page {
+      size: A4;
+      margin: 16mm; /* Comfortable margins */
+    }
     @media print {
+      /* Reset container visuals for paper */
       body { background: #fff !important; }
-      .page { box-shadow: none !important; border: none !important; margin: 0 !important; max-width: 100% !important; }
-      .page-header { padding: 8px 0 4px 0 !important; border: none !important; }
-      .page-actions { display: none !important; } /* hide buttons on print */
+      .page {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .page-header {
+        padding: 0 0 8px 0 !important;
+        border: none !important;
+      }
+      .page-actions { display: none !important; } /* hide buttons */
       .page-body { padding: 0 !important; }
-      h1, h2, h3, h4, h5, h6 { margin: 0 0 4px 0 !important; }
-      /* Smaller font for print */
-      html, body, table { font-size: 12px !important; line-height: 1.25 !important; }
-      .table > :not(caption) > * > * { padding: 4px 6px !important; } /* tighter cells */
-      .badge { border: 1px solid #444 !important; color: #000 !important; background: transparent !important; }
-      .text-muted { color: #000 !important; }
-      tr, td, th { page-break-inside: avoid !important; }
+
+      /* Typography: relaxed and readable */
+      html, body {
+        font-size: 12px !important;   /* was 10px → more relaxed */
+        line-height: 1.45 !important; /* more breathing room */
+      }
+      h1 { font-size: 20px !important; margin: 0 0 6px 0 !important; }
+      h2 { font-size: 16px !important; margin: 10px 0 6px 0 !important; }
+      h3, h4 { margin: 8px 0 4px 0 !important; }
+
+      /* Softer visuals for print */
+      .table {
+        border: 1px solid #ddd !important;
+      }
+      .table thead {
+        background: #f7f7f7 !important;
+      }
+      .table > :not(caption) > * > * {
+        padding: 8px 9px !important;  /* relaxed cell spacing */
+        background-color: transparent !important; /* remove stripes */
+        border-color: #ddd !important;
+      }
+      .badge {
+        border: 1px solid #bbb !important;
+        color: #222 !important;
+        background: #fafafa !important;
+      }
+      .text-muted, .subtle { color: #333 !important; }
+
+      /* Page-break control for a relaxed structure */
       .no-break { page-break-inside: avoid !important; }
+      .section { page-break-inside: avoid !important; }
+      .section-break { page-break-before: always !important; }
+
+      /* Avoid orphan/widow lines in lists/paragraphs (best-effort) */
+      p, li { orphans: 3; widows: 3; }
+      tr, td, th { page-break-inside: avoid !important; }
+      /* Slightly more space between sections on paper */
+      .section + .section { margin-top: 10px !important; }
     }
   </style>
 </head>
@@ -60,7 +131,7 @@
           <div class="text-muted">Quick reference for interviews, design reviews, and team onboarding</div>
         </div>
         <div class="page-actions">
-          <button id="btnExport" class="btn btn-primary btn-sm">
+          <button id="btnExport" class="btn btn-outline-primary btn-sm">
             <span class="me-1">📄</span> Export to PDF
           </button>
         </div>
@@ -78,89 +149,159 @@
     </div>
 
     <div class="page-body">
-      <!-- Table: Good Software Aspects -->
-      <div class="table-responsive no-break">
-        <table class="table table-striped table-bordered align-middle">
-          <thead class="table-light">
-            <tr>
-              <th style="width: 16%">Aspect</th>
-              <th style="width: 44%">Definition</th>
-              <th style="width: 40%">Practical signals</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Maintainable</strong></td>
-              <td>Easy to read, understand, and change without fear of regressions.</td>
-              <td>Consistent style, clear naming, code reviews, linters, low cyclomatic complexity, clear boundaries.</td>
-            </tr>
-            <tr>
-              <td><strong>Scalable</strong></td>
-              <td>Grows gracefully with users, data, and features without major rewrites.</td>
-              <td>Horizontal scaling paths, stateless services, efficient DB access, caching, idempotent ops, back-pressure.</td>
-            </tr>
-            <tr>
-              <td><strong>Reliable</strong></td>
-              <td>Functions correctly and consistently under expected conditions.</td>
-              <td>SLOs/SLAs, health checks, retries with jitter, circuit breakers, graceful degradation, error budgets.</td>
-            </tr>
-            <tr>
-              <td><strong>Testable</strong></td>
-              <td>Designed so automated tests are easy to write and run.</td>
-              <td>DI-friendly, pure functions, seamful design, fast unit tests, CI pipelines, contract & E2E tests.</td>
-            </tr>
-            <tr>
-              <td><strong>Performant</strong></td>
-              <td>Uses resources efficiently with quick responses.</td>
-              <td>Profiling, APM traces, O(n) awareness, async where needed, pagination, lazy loading, memory discipline.</td>
-            </tr>
-            <tr>
-              <td><strong>Well‑documented</strong></td>
-              <td>Clear docs for developers and future contributors.</td>
-              <td>README with setup/run, ADRs, API specs, runbooks, onboarding guides, comments where it adds context.</td>
-            </tr>
-            <tr>
-              <td><strong>Secure</strong></td>
-              <td>Protects data and resists common vulnerabilities.</td>
-              <td>Least privilege, secret management, dependency scanning, input validation, TLS, authn/z, threat modeling.</td>
-            </tr>
-            <tr>
-              <td><strong>Modular</strong></td>
-              <td>Loosely coupled, highly cohesive components that are reusable.</td>
-              <td>Clear interfaces, bounded contexts, small surfaces, versioned contracts, dependency inversion.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
-      <!-- Concise list view -->
-      <div class="mt-3">
-        <small class="text-muted">Concise view:</small>
-        <ul class="mb-0">
-          <li>Maintainable • Scalable • Reliable • Testable • Performant • Well‑documented • Secure • Modular</li>
-        </ul>
-      </div>
+      <!-- SECTION 1: Table -->
+      <section class="section no-break">
+        <h2 class="h5 section-title">Core Developer Aspects</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead>
+              <tr>
+                <th style="width: 16%">Aspect</th>
+                <th style="width: 44%">Definition</th>
+                <th style="width: 40%">Practical signals</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Maintainable</strong></td>
+                <td>Easy to read, understand, and change without fear of regressions.</td>
+                <td>Consistent style, clear naming, code reviews, linters, low cyclomatic complexity, clear boundaries.</td>
+              </tr>
+              <tr>
+                <td><strong>Scalable</strong></td>
+                <td>Grows gracefully with users, data, and features without major rewrites.</td>
+                <td>Horizontal scaling paths, stateless services, efficient DB access, caching, idempotent ops, back-pressure.</td>
+              </tr>
+              <tr>
+                <td><strong>Reliable</strong></td>
+                <td>Functions correctly and consistently under expected conditions.</td>
+                <td>SLOs/SLAs, health checks, retries with jitter, circuit breakers, graceful degradation, error budgets.</td>
+              </tr>
+              <tr>
+                <td><strong>Testable</strong></td>
+                <td>Designed so automated tests are easy to write and run.</td>
+                <td>DI-friendly, pure functions, seamful design, fast unit tests, CI pipelines, contract & E2E tests.</td>
+              </tr>
+              <tr>
+                <td><strong>Performant</strong></td>
+                <td>Uses resources efficiently with quick responses.</td>
+                <td>Profiling, APM traces, O(n) awareness, async where needed, pagination, lazy loading, memory discipline.</td>
+              </tr>
+              <tr>
+                <td><strong>Well‑documented</strong></td>
+                <td>Clear docs for developers and future contributors.</td>
+                <td>README with setup/run, ADRs, API specs, runbooks, onboarding guides, comments where it adds context.</td>
+              </tr>
+              <tr>
+                <td><strong>Secure</strong></td>
+                <td>Protects data and resists common vulnerabilities.</td>
+                <td>Least privilege, secret management, dependency scanning, input validation, TLS, authn/z, threat modeling.</td>
+              </tr>
+              <tr>
+                <td><strong>Modular</strong></td>
+                <td>Loosely coupled, highly cohesive components that are reusable.</td>
+                <td>Clear interfaces, bounded contexts, small surfaces, versioned contracts, dependency inversion.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <!-- NEW SECTION: How to deliver a good application from small tasks -->
-      <hr class="my-4">
-      <h2 class="h5 section-title">Deliver a Good Application from Small Tasks</h2>
-      <ol class="mb-0">
-        <li><strong>Break work into small, well‑defined tasks</strong> with clear acceptance criteria.</li>
-        <li><strong>Prioritize tasks</strong> based on value and dependencies.</li>
-        <li><strong>Implement and test each task fully</strong> (unit tests, manual checks).</li>
-        <li><strong>Integrate frequently</strong> to catch issues early.</li>
-        <li><strong>Review code regularly</strong> to maintain quality and consistency.</li>
-        <li><strong>Refine continuously</strong>—improve design, naming, structure as you go.</li>
-        <li><strong>Validate with users/requirements</strong> after each small delivery.</li>
-        <li><strong>Keep documentation updated</strong> alongside each task.</li>
-      </ol>
+        <!-- Concise line -->
+        <div class="mt-2">
+          <small class="text-muted">Concise: Maintainable • Scalable • Reliable • Testable • Performant • Well‑documented • Secure • Modular</small>
+        </div>
+      </section>
+
+      <!-- SECTION 2: Brief List -->
+      <section class="section">
+        <h2 class="h5 section-title">Deliver a Good Application from Small Tasks — Brief</h2>
+        <ol class="mb-0">
+          <li><strong>Break work into small, well‑defined tasks</strong> with clear acceptance criteria.</li>
+          <li><strong>Prioritize tasks</strong> based on value and dependencies.</li>
+          <li><strong>Implement and test each task fully</strong> (unit tests, manual checks).</li>
+          <li><strong>Integrate frequently</strong> to catch issues early.</li>
+          <li><strong>Review code regularly</strong> to maintain quality and consistency.</li>
+          <li><strong>Refine continuously</strong>—improve design, naming, structure as you go.</li>
+          <li><strong>Validate with users/requirements</strong> after each small delivery.</li>
+          <li><strong>Keep documentation updated</strong> alongside each task.</li>
+        </ol>
+      </section>
+
+      <!-- SECTION 3: Expanded Explanation -->
+      <section class="section section-break">
+        <h2 class="h5 section-title">Deliver a Good Application from Small Tasks — Expanded</h2>
+
+        <div class="card border-0">
+          <div class="card-body p-0">
+            <h3 class="h6 mb-1">1) Break work into small, well‑defined tasks</h3>
+            <p class="subtle mb-2">Small tasks make progress predictable and reduce risk.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> One clear outcome per task, explicit acceptance criteria, avoid mixing concerns.</li>
+              <li><strong>Why it matters:</strong> Faster delivery, fewer hidden problems, lower cognitive load.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">2) Prioritize by value and dependencies</h3>
+            <p class="subtle mb-2">Build in the right order.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Unblockers first, high user/business value early, defer low‑impact work.</li>
+              <li><strong>Why it matters:</strong> Efficient progress, less rework, avoids missing foundations.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">3) Implement and test each task completely</h3>
+            <p class="subtle mb-2">A task is only valuable if it’s done well.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Sufficient unit/integration tests, manual checks as needed, meet acceptance criteria.</li>
+              <li><strong>Why it matters:</strong> Prevents bug pile‑up, keeps stability, quality grows with progress.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">4) Integrate frequently</h3>
+            <p class="subtle mb-2">Merge often to catch issues early.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Short‑lived branches, frequent merges, CI/CD automation.</li>
+              <li><strong>Why it matters:</strong> Fewer conflicts, early detection, app stays deployable.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">5) Review code regularly</h3>
+            <p class="subtle mb-2">Preserve consistency and quality.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Peer review every task; clarity, correctness, maintainability; linters & static analysis.</li>
+              <li><strong>Why it matters:</strong> Controls tech debt, spreads knowledge, cheaper future changes.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">6) Continuously refine as you work</h3>
+            <p class="subtle mb-2">Refactor frequently, not rarely.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Improve naming/structure, remove duplication, simplify logic inline with delivery.</li>
+              <li><strong>Why it matters:</strong> Keeps codebase healthy and fast to change, prevents decay.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">7) Validate with users/requirements after each delivery</h3>
+            <p class="subtle mb-2">Shorten the feedback loop.</p>
+            <ul class="mb-3">
+              <li><strong>What this means:</strong> Demo increments to users/PM/design, verify intent vs outcome, adjust quickly.</li>
+              <li><strong>Why it matters:</strong> Avoids building the wrong thing, stays aligned with real needs.</li>
+            </ul>
+
+            <h3 class="h6 mb-1">8) Keep documentation updated with each task</h3>
+            <p class="subtle mb-2">Small doc updates compound into clarity.</p>
+            <ul class="mb-0">
+              <li><strong>What this means:</strong> Update README, API docs, runbooks; add comments where context matters; capture decisions (ADRs).</li>
+              <li><strong>Why it matters:</strong> Easier onboarding, fewer repeated questions, smoother future changes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 
   <!-- Bootstrap JS (optional, for button style only) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-          crossorigin="anonymous"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
 
   <script>
     // Export to PDF via browser print dialog
