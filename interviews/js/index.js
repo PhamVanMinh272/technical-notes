@@ -1,7 +1,7 @@
 // Interview data (modular, easy to extend)
 const interviews = [
   { title: "What is a Senior Python Developer?", file: "what-is-a-senior-python-developer.html" },
-  { title: "Interview with Bob", file: "interviews/interview2.html" },
+  { title: "Database Knowledge Guides", file: "database-knowledge-guides.html" },
   { title: "Interview with Charlie", file: "interviews/interview3.html" }
 ];
 

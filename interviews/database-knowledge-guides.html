@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Senior Python Engineer — Database Knowledge Guide (Print B/W)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root { --page-max: 1000px; }
+    body { background: #f6f7f9; }
+    .page {
+      background: #fff;
+      max-width: var(--page-max);
+      margin: 2rem auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    header.hero {
+      /* Colorful gradient on screen, neutralized in print */
+      background: linear-gradient(135deg, #0d6efd 0%, #4f9cff 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem;
+    }
+    header .subtitle { opacity: 0.95; }
+    .content { padding: 2rem 1.5rem 2.5rem; }
+    .toc a { text-decoration: none; }
+    .section h2 .num { color: #0d6efd; font-weight: 700; }
+    .callout {
+      border-left: 4px solid #0d6efd;
+      background: #f2f7ff;
+      padding: 1rem 1rem 0.5rem;
+      border-radius: 8px;
+    }
+    .badge-pill { border-radius: 50px; }
+    .icon-bullet { color: #0d6efd; margin-right: .5rem; }
+    .summary-table th { white-space: nowrap; }
+    .footer-note { font-size: 0.9rem; color: #6c757d; }
+
+    /* Toolbar (screen only) */
+    .no-print {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(246,247,249,0.85);
+      backdrop-filter: blur(4px);
+    }
+    .toolbar {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: .75rem 1rem;
+      display: flex;
+      gap: .5rem;
+      justify-content: flex-end;
+    }
+
+    /* ---------------------------
+       PRINT: FORCE BLACK & WHITE
+       --------------------------- */
+    @media print {
+      /* Page setup for A4 portrait */
+      @page { size: A4 portrait; margin: 16mm; }
+
+      /* Remove shadows, rounded corners, toolbars */
+      body { background: #fff !important; }
+      .page { box-shadow: none !important; margin: 0 !important; border-radius: 0 !important; }
+      .no-print, .no-print * { display: none !important; }
+
+      /* Force monochrome */
+      /* 1) Text and icons to black */
+      * {
+        color: #000 !important;
+        -webkit-text-fill-color: #000 !important; /* WebKit */
+      }
+
+      /* 2) Remove color backgrounds/gradients/images and use white */
+      html, body, .page, header.hero, .card, .callout, .badge, .table,
+      .table thead, .table tbody, .bg-light, .alert, .list-group-item {
+        background: #fff !important;
+        background-image: none !important;
+      }
+
+      /* 3) Borders in black (thin) */
+      *, *::before, *::after {
+        border-color: #000 !important;
+      }
+      .table, .table * { border-color: #000 !important; }
+      .callout { border-left: 3px solid #000 !important; }
+
+      /* 4) Links */
+      a, a:visited { color: #000 !important; text-decoration: none !important; }
+      a[href]:after { content: "" !important; }
+
+      /* 5) Icons & images: grayscale and contrast */
+      img, svg, .bi { filter: grayscale(100%) contrast(110%) !important; }
+
+      /* 6) Section number color override */
+      .section h2 .num { color: #000 !important; }
+
+      /* 7) Optional page breaks helper */
+      .page-break { break-before: page; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toolbar (hidden when printing) -->
+  <div class="no-print shadow-sm">
+    <div class="toolbar">
+      <button class="btn btn-outline-secondary" onclick="window.print()">
+        <i class="bi bi-printer me-1"></i> Print / Save as PDF (B/W)
+      </button>
+    </div>
+  </div>
+
+  <main id="report" class="page">
+    <header class="hero">
+      <div class="container-fluid">
+        <h1 class="display-5 fw-bold mb-2">Senior Python Engineer — Database Knowledge</h1>
+        <p class="lead subtitle mb-3">A practical roadmap of what you should master for real-world systems.</p>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge text-bg-light text-dark badge-pill">
+            Prepared for: <strong>Minh Pham Van</strong>
+          </span>
+          <span class="badge text-bg-light text-dark badge-pill">
+            Generated: <span id="generatedDate"></span>
+          </span>
+          <span class="badge text-bg-light text-dark badge-pill">
+            Print: Black & White via Browser
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content container-fluid">
+      <!-- Table of Contents -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h4 mb-3"><i class="bi bi-list-check me-2"></i>Table of Contents</h2>
+          <div class="row toc">
+            <div class="col-md-6">
+              <ol class="mb-0">
+                <li>SQL Mastery</li>
+                <li>Database Design & Normalization</li>
+                <li>Performance & Optimization</li>
+                <li>Transactions & Concurrency</li>
+                <li>Python ORM Deep Knowledge</li>
+              </ol>
+            </div>
+            <div class="col-md-6">
+              <ol start="6" class="mb-0">
+                <li>NoSQL Ecosystem</li>
+                <li>Data Warehousing & Analytics</li>
+                <li>Distributed DBs & Scaling</li>
+                <li>Security & Compliance</li>
+                <li>Python + DB Integration</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Intro Callout -->
+      <div class="callout mb-4">
+        <p class="mb-2"><i class="bi bi-lightbulb-fill me-2"></i><strong>How to use this guide:</strong> Treat each section as a competency area. Build mental models first (how/why), then practice with realistic constraints (scale, latency, failures).</p>
+      </div>
+
+      <!-- Sections -->
+      <section id="sec1" class="section mb-4">
+        <h2 class="h4"><span class="num">1.</span> SQL Mastery (Deep Understanding)</h2>
+        <p>Write and optimize complex SQL confidently. You should be comfortable with:</p>
+        <ul class="mb-2">
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Joins: <em>INNER, LEFT, RIGHT, FULL</em></li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Window functions: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>LAG()</code>, <code>LEAD()</code></li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> CTEs, subqueries (including correlated)</li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Grouping sets & rollups</li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Transactions: <code>BEGIN</code>, <code>COMMIT</code>, <code>ROLLBACK</code></li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Query plans & <code>EXPLAIN</code></li>
+        </ul>
+        <div class="bg-light rounded p-3">
+<pre><code>-- Example: window function with partition + order
+SELECT user_id,
+       created_at,
+       amount,
+       SUM(amount) OVER (PARTITION BY user_id ORDER BY created_at) AS running_total
+FROM payments;
+</code></pre>
+        </div>
+      </section>
+
+      <section id="sec2" class="section mb-4">
+        <h2 class="h4"><span class="num">2.</span> Database Design & Normalization</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Normal forms (1NF → 3NF); strategic denormalization for performance</li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Primary keys (natural vs surrogate), foreign keys, referential integrity</li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> Many-to-many modeling, junction tables</li>
+          <li><i class="bi bi-check-circle-fill icon-bullet"></i> OLTP vs OLAP considerations; fact vs dimension tables</li>
+        </ul>
+      </section>
+
+      <section id="sec3" class="section mb-4">
+        <h2 class="h4"><span class="num">3.</span> Performance & Optimization</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-speedometer2 icon-bullet"></i> Indexing: B-tree, hash, partial, composite; covering indexes</li>
+          <li><i class="bi bi-speedometer2 icon-bullet"></i> Reading query execution plans; locating bottlenecks</li>
+          <li><i class="bi bi-speedometer2 icon-bullet"></i> Detecting slow queries; benchmarking strategies</li>
+          <li><i class="bi bi-speedometer2 icon-bullet"></i> Caching: Redis/Memcached patterns (read‑through, write‑through, TTL)</li>
+          <li><i class="bi bi-speedometer2 icon-bullet"></i> Connection pooling; partitioning; sharding basics</li>
+        </ul>
+      </section>
+
+      <section id="sec4" class="section mb-4">
+        <h2 class="h4"><span class="num">4.</span> Transactions & Concurrency</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-diagram-3 icon-bullet"></i> ACID guarantees; anomalies & isolation levels (RU, RC, RR, Serializable)</li>
+          <li><i class="bi bi-diagram-3 icon-bullet"></i> Locking: optimistic vs pessimistic; hot rows; deadlock detection & avoidance</li>
+          <li><i class="bi bi-diagram-3 icon-bullet"></i> Idempotency & retry patterns in apps</li>
+        </ul>
+      </section>
+
+      <section id="sec5" class="section mb-4">
+        <h2 class="h4"><span class="num">5.</span> Python ORM Deep Knowledge</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-sliders2-vertical icon-bullet"></i> SQLAlchemy (Core + ORM); Django ORM; (Tortoise, Peewee optional)</li>
+          <li><i class="bi bi-sliders2-vertical icon-bullet"></i> N+1 query pitfall; lazy vs eager loading; selectin/joinedload</li>
+          <li><i class="bi bi-sliders2-vertical icon-bullet"></i> Session lifecycle; Unit of Work; Repository pattern</li>
+          <li><i class="bi bi-sliders2-vertical icon-bullet"></i> Migrations: Alembic / Django migrations; zero‑downtime tactics</li>
+        </ul>
+      </section>
+
+      <section id="sec6" class="section mb-4">
+        <h2 class="h4"><span class="num">6.</span> NoSQL Ecosystem</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100">
+              <h6 class="mb-2">When to Use</h6>
+              <ul class="mb-0">
+                <li>Flexible schema; evolving payloads</li>
+                <li>Horizontal scalability; high write throughput</li>
+                <li>Event logs; caching; ephemeral state</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100">
+              <h6 class="mb-2">Types & Examples</h6>
+              <ul class="mb-0">
+                <li>Document: MongoDB, Couchbase</li>
+                <li>Key‑Value: Redis, DynamoDB</li>
+                <li>Wide‑Column: Cassandra, Bigtable</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec7" class="section mb-4">
+        <h2 class="h4"><span class="num">7.</span> Data Warehousing & Analytics Foundations</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-database-check icon-bullet"></i> Star vs snowflake schema</li>
+          <li><i class="bi bi-database-check icon-bullet"></i> ETL/ELT pipelines; orchestration basics</li>
+          <li><i class="bi bi-database-check icon-bullet"></i> Platforms: Snowflake, BigQuery, Redshift</li>
+          <li><i class="bi bi-database-check icon-bullet"></i> Materialized views; incremental models</li>
+        </ul>
+      </section>
+
+      <section id="sec8" class="section mb-4">
+        <h2 class="h4"><span class="num">8.</span> Distributed Databases & Scaling Concepts</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-cloud-arrow-up icon-bullet"></i> CAP theorem; consistency models (strong vs eventual)</li>
+          <li><i class="bi bi-cloud-arrow-up icon-bullet"></i> Replication: single‑leader, multi‑leader; read replicas</li>
+          <li><i class="bi bi-cloud-arrow-up icon-bullet"></i> Sharding strategies; multi‑region trade‑offs</li>
+        </ul>
+      </section>
+
+      <section id="sec9" class="section mb-4">
+        <h2 class="h4"><span class="num">9.</span> Security & Compliance</h2>
+        <ul class="mb-2">
+          <li><i class="bi bi-shield-lock icon-bullet"></i> Prevent SQL injection; parameterized queries; ORM safeguards</li>
+          <li><i class="bi bi-shield-lock icon-bullet"></i> Encryption: TDE; column‑level; TLS in transit</li>
+          <li><i class="bi bi-shield-lock icon-bullet"></i> Password hashing: bcrypt, Argon2; secrets management (Vault/AKV/ASM)</li>
+          <li><i class="bi bi-shield-lock icon-bullet"></i> RBAC/ABAC; least privilege; auditing</li>
+        </ul>
+      </section>
+
+      <section id="sec10" class="section mb-4">
+        <h2 class="h4"><span class="num">10.</span> Practical Python + Database Integration</h2>
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="p-3 bg-light rounded h-100">
+              <h6 class="mb-2">Libraries & Patterns</h6>
+              <ul class="mb-0">
+                <li><code>psycopg2</code> / <code>asyncpg</code>, SQLAlchemy (Core + ORM)</li>
+                <li>Connection pooling; retry & backoff; circuit breakers</li>
+                <li>Repository & Unit of Work patterns</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="p-3 bg-light rounded h-100">
+              <h6 class="mb-2">Testing</h6>
+              <ul class="mb-0">
+                <li>Transactional test isolation; fixtures</li>
+                <li>In‑memory SQLite for simple tests; ephemeral Postgres for integration</li>
+                <li>Mocking DB calls where appropriate</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary Table -->
+      <section class="section mb-4 page-break">
+        <h2 class="h4 mb-3"><i class="bi bi-table me-2"></i>Summary — Senior-Level Expectations</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle summary-table">
+            <thead class="table-light">
+              <tr>
+                <th>Area</th>
+                <th>Expectations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>SQL</td><td>Complex queries, window functions, CTEs, query plans & tuning</td></tr>
+              <tr><td>Design</td><td>Normalization & selective denormalization; relationship modeling</td></tr>
+              <tr><td>Performance</td><td>Indexes; caching; partitioning; sharding basics; connection pooling</td></tr>
+              <tr><td>Transactions</td><td>Isolation levels; concurrency control; deadlock handling</td></tr>
+              <tr><td>ORMs</td><td>SQLAlchemy mastery; avoid N+1; eager loading; migrations</td></tr>
+              <tr><td>NoSQL</td><td>When/why to use MongoDB/Redis/Cassandra; consistency trade‑offs</td></tr>
+              <tr><td>Scaling</td><td>Replication models; sharding; CAP; multi‑region considerations</td></tr>
+              <tr><td>Security</td><td>SQLi prevention; encryption; RBAC; secrets mgmt; auditability</td></tr>
+              <tr><td>Python Integration</td><td>Async DB; pooling; resiliency patterns; test strategies</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Next Steps -->
+      <section class="section">
+        <h2 class="h4 mb-2"><i class="bi bi-rocket-takeoff me-2"></i>Next Steps</h2>
+        <ol class="mb-2">
+          <li>Pick a primary RDBMS (PostgreSQL recommended) and a dataset to practice.</li>
+          <li>Re‑implement core features twice: once with SQLAlchemy ORM, once with SQLAlchemy Core.</li>
+          <li>Add Redis caching and measure latency/throughput changes.</li>
+          <li>Introduce a read replica; implement read/write split; test failover.</li>
+          <li>Practice migrations with Alembic (zero‑downtime scenario).</li>
+        </ol>
+        <p class="footer-note">Tip: Track your learnings and gotchas in a living document. Revisit quarterly.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Fill generated date
+    (function () {
+      const el = document.getElementById('generatedDate');
+      const d = new Date();
+      const fmt = d.toLocaleString([], {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      });
+      el.textContent = fmt;
+    })();
+  </script>
+</body>
+</html>
