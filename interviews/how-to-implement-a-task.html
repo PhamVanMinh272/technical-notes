@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Architectural Thinking — Senior Python Developer</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root{--base:12px;--lh:1.25}
+  body{background:#f8f9fa;padding:18px;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+  .sheet{max-width:900px;margin:0 auto;background:#fff;padding:14mm;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.04);font-size:var(--base);line-height:var(--lh)}
+  h1{font-size:1.05rem;margin-bottom:.25rem}
+  h3{font-size:.95rem;margin-top:.6rem}
+  table td,table th{vertical-align:top;font-size:11px}
+  .no-print{margin-left:auto}
+  @media print{.no-print{display:none!important}.sheet{box-shadow:none;margin:0;padding:12mm}}
+  .kbd{background:#eef;padding:.08rem .35rem;border-radius:.25rem;font-family:monospace;font-size:11px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="d-flex align-items-start mb-2">
+    <div>
+      <h1 class="mb-0">Architectural Thinking Checklist — Senior Python Developer</h1>
+      <div class="text-muted small">Quick guide: clarify, design, prototype, observe.</div>
+    </div>
+    <div class="no-print d-flex gap-2">
+      <button id="exportPdf" class="btn btn-primary btn-sm">Export to PDF</button>
+      <button id="printBtn" class="btn btn-outline-secondary btn-sm">Print</button>
+    </div>
+  </div>
+
+  <h3>Top‑level approach (first 10–30 minutes)</h3>
+  <ul>
+    <li><strong>Clarify goal</strong>: users, success criteria, SLOs (latency, uptime).</li>
+    <li><strong>Identify constraints</strong>: timeline, infra (cloud/on‑prem), team skills.</li>
+    <li><strong>Define failure modes</strong>: slow deps, DB down, malformed inputs.</li>
+  </ul>
+
+  <h3>Architecture dimensions</h3>
+  <table class="table table-sm">
+    <thead><tr><th>Dimension</th><th>Key question</th><th>Design hint</th></tr></thead>
+    <tbody>
+      <tr><td><strong>State</strong></td><td>Stateless or stateful?</td><td>Prefer stateless services; use durable storage for consistency.</td></tr>
+      <tr><td><strong>Scale</strong></td><td>QPS and latency targets?</td><td>Cache, async workers, sharding when needed.</td></tr>
+      <tr><td><strong>Resilience</strong></td><td>How to handle failures?</td><td>Timeouts, retries, circuit breakers, graceful degradation.</td></tr>
+      <tr><td><strong>Observability</strong></td><td>How will we detect issues?</td><td>Metrics, structured logs, distributed traces, alerts.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Practical steps to implement</h3>
+  <ol>
+    <li><strong>Sketch a diagram</strong> (10 minutes): components, data flow, failure boundaries.</li>
+    <li><strong>Write acceptance criteria & NFRs</strong>: SLOs, MTTR targets, security needs.</li>
+    <li><strong>Prototype the riskiest path</strong>: validate assumptions, add observability hooks.</li>
+    <li><strong>Define contracts</strong>: API schemas, message formats, idempotency rules.</li>
+    <li><strong>Plan rollout</strong>: canary, feature flags, automated rollback.</li>
+  </ol>
+
+  <h3>Risks & tradeoffs</h3>
+  <ul>
+    <li><strong>Over‑engineering</strong>: avoid premature microservices; prefer modular monoliths for fast delivery.</li>
+    <li><strong>Operational debt</strong>: instrument and automate runbooks early.</li>
+    <li><strong>Performance vs resilience</strong>: defensive checks add latency—measure and tune.</li>
+  </ul>
+
+  <h3>Quick checklist (copyable)</h3>
+  <pre class="p-2 bg-light">1. Goal + SLOs
+2. Constraints & timeline
+3. Failure modes list
+4. 10‑min diagram
+5. Prototype critical path
+6. Observability + alerts
+7. Canary deploy + rollback</pre>
+
+  <div class="text-muted small mt-2">Generated for Ward 14, Ho Chi Minh City — compact A4 layout.</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  document.getElementById('exportPdf').addEventListener('click', function(){
+    const el = document.querySelector('.sheet');
+    const opt = { margin:12, filename:'architecture-checklist.pdf', image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2,useCORS:true}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} };
+    html2pdf().set(opt).from(el).save();
+  });
+  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+</script>
+</body>
+</html>
