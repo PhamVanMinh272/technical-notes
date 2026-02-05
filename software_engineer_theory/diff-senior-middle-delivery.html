@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Senior vs Mid Software Engineer — Outcome Differences (Python)</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- Bootstrap Icons (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <!-- html2pdf.js (bundled with html2canvas + jsPDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+  <style>
+    :root {
+      --brand: #0d6efd;  /* Bootstrap primary */
+      --subtle: #f8f9fa;
+    }
+
+    body {
+      background: #ffffff;
+      color: #212529;
+    }
+
+    /* Sticky control bar at top (hidden in print) */
+    .page-controls {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: saturate(160%) blur(6px);
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .lead-note {
+      background: var(--subtle);
+      border-left: 4px solid var(--brand);
+    }
+
+    .compare-card .card-header {
+      background: linear-gradient(90deg, rgba(13,110,253,0.06), transparent);
+      border-bottom: none;
+    }
+
+    .role-col {
+      border-left: 3px solid transparent;
+      padding-left: 0.75rem;
+    }
+    .role-col.senior { border-left-color: #0d6efd; }
+    .role-col.mid    { border-left-color: #6c757d; }
+
+    pre code {
+      white-space: pre-wrap;    /* wrap long lines for print/PDF */
+      word-break: break-word;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .section-anchor {
+      scroll-margin-top: 6rem; /* account for sticky controls */
+    }
+
+    /* Page settings for print/PDF */
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+    .page-break { break-before: page; page-break-before: always; }
+
+    @media print {
+      .no-print { display: none !important; }
+      .card, .table, .alert { box-shadow: none !important; }
+      .container { max-width: 100% !important; }
+      a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Controls -->
+  <div class="page-controls py-2 no-print">
+    <div class="container d-flex flex-wrap align-items-center gap-2">
+      <div class="me-auto">
+        <strong>Senior vs Mid Software Engineer — Outcomes</strong>
+        <small class="text-muted ms-2">Printable & PDF-exportable</small>
+      </div>
+      <div class="btn-group">
+        <button id="btnDownloadPdf" class="btn btn-primary btn-sm">
+          <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+        </button>
+        <button id="btnPrint" class="btn btn-outline-primary btn-sm">
+          <i class="bi bi-printer me-1"></i> Print / Save as PDF
+        </button>
+      </div>
+      <div class="vr mx-2 d-none d-md-block"></div>
+      <div class="btn-group">
+        <button id="btnExpandAll" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrows-expand me-1"></i> Expand All
+        </button>
+        <button id="btnCollapseAll" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrows-collapse me-1"></i> Collapse All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content to export -->
+  <main id="content" class="container my-4">
+    <header class="mb-4">
+      <h1 class="h3 mb-2">Outcome Differences: Senior vs Mid-level Software Engineer (Python)</h1>
+      <p class="text-muted mb-1">Same task, different results — scope, robustness, maintainability, and risk.</p>
+      <small class="text-muted">Generated: <span id="generatedDate"></span></small>
+    </header>
+
+    <section class="lead-note p-3 rounded-2 mb-4">
+      <p class="mb-1">
+        This page summarizes how outcomes typically differ when a <strong>Senior</strong> and a
+        <strong>Mid-level</strong> software engineer receive the <em>same Python task</em>.
+      </p>
+      <ul class="mb-0">
+        <li>Focus areas: requirements, design, correctness, testing, operations, performance, security, and docs.</li>
+        <li>Includes: a concrete CSV-to-DB API example, a side-by-side summary, and practical improvement steps.</li>
+        <li>Use the <strong>Download PDF</strong> or <strong>Print</strong> buttons above to export.</li>
+      </ul>
+    </section>
+
+    <!-- 1) Scope & Problem Framing -->
+    <section id="s1" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">1) Scope &amp; Problem Framing</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c1">Toggle</button>
+        </div>
+        <div id="c1" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary"><i class="bi bi-mortarboard-fill me-1"></i> Senior</h3>
+              <ul class="mb-0">
+                <li>Clarifies requirements, constraints, and success metrics.</li>
+                <li>Surfaces edge cases and long-term implications.</li>
+                <li>Proposes alternatives and simplifies scope where sensible.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary"><i class="bi bi-person-workspace me-1"></i> Mid-level</h3>
+              <ul class="mb-0">
+                <li>Implements the stated problem as-is.</li>
+                <li>Less likely to challenge ambiguous requirements.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) Design & Abstractions -->
+    <section id="s2" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">2) Design &amp; Abstractions</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c2">Toggle</button>
+        </div>
+        <div id="c2" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Layered boundaries, clean interfaces, separation of concerns.</li>
+                <li>Designs for <em>change vectors</em> and dependency inversion.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Reasonable modularity but more coupling/leaky abstractions.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Code Quality & Readability -->
+    <section id="s3" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">3) Code Quality &amp; Readability</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c3">Toggle</button>
+        </div>
+        <div id="c3" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Consistent style, type hints, docstrings, clear naming.</li>
+                <li>Small pure functions; separate I/O from logic.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Readable but may mix concerns; longer functions.</li>
+                <li>Some missing types/docstrings.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Correctness & Edge Cases -->
+    <section id="s4" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">4) Correctness &amp; Edge Cases</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c4">Toggle</button>
+        </div>
+        <div id="c4" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Handles malformed inputs, retries/timeouts, partial failures.</li>
+                <li>Idempotency and explicit assumption checks.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Covers nominal paths and a few common errors.</li>
+                <li>Edge-case coverage is partial.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Testing Strategy -->
+    <section id="s5" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">5) Testing Strategy</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c5">Toggle</button>
+        </div>
+        <div id="c5" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Unit + integration; mocks/stubs as needed.</li>
+                <li>Property-based tests and failure-mode coverage.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Happy-path unit tests; fewer failure-mode tests.</li>
+                <li>Integration tests may be flaky or missing.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6) Operational Readiness -->
+    <section id="s6" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">6) Operational Readiness</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c6">Toggle</button>
+        </div>
+        <div id="c6" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Structured logging, metrics, tracing, health checks.</li>
+                <li>Config via env vars; graceful shutdown; SLO/SLI aware.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Some logging and config, fewer observability hooks.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7) Performance & Scalability -->
+    <section id="s7" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">7) Performance &amp; Scalability</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c7">Toggle</button>
+        </div>
+        <div id="c7" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Designs for load: streaming, batching, async/concurrency.</li>
+                <li>Measures before optimizing; back-pressure where needed.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Works at current scale; ad-hoc micro-optimizations.</li>
+                <li>Less instrumentation for performance.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8) Security & Compliance -->
+    <section id="s8" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">8) Security &amp; Compliance</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c8">Toggle</button>
+        </div>
+        <div id="c8" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Input sanitization, secrets management, least privilege.</li>
+                <li>Dependency pinning, reproducible builds, data governance.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Basic checks; may overlook pins/secrets hygiene/audits.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9) Delivery & DevEx -->
+    <section id="s9" class="section-anchor mb-3">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">9) Delivery &amp; DevEx</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c9">Toggle</button>
+        </div>
+        <div id="c9" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Clear README, migration notes, versioning, feature flags.</li>
+                <li>CI/CD, rollbacks; realistic estimates and risk mitigation.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Working code, brief README; manual steps remain.</li>
+                <li>Estimates may miss risk buffers.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10) Long-term Maintainability -->
+    <section id="s10" class="section-anchor mb-4">
+      <div class="card compare-card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">10) Long‑term Maintainability</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#c10">Toggle</button>
+        </div>
+        <div id="c10" class="collapse show">
+          <div class="card-body row g-3">
+            <div class="col-md-6 role-col senior">
+              <h3 class="h6 text-primary">Senior</h3>
+              <ul class="mb-0">
+                <li>Easy to change without fear; guardrails and ADRs.</li>
+                <li>Minimizes tech debt and documents trade-offs.</li>
+              </ul>
+            </div>
+            <div class="col-md-6 role-col mid">
+              <h3 class="h6 text-secondary">Mid-level</h3>
+              <ul class="mb-0">
+                <li>Maintainable short-term; debt accumulates faster.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concrete Example -->
+    <section id="example" class="mb-4 page-break">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">Concrete Example (Python): CSV Import REST → Postgres</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#ex1">Toggle</button>
+        </div>
+        <div id="ex1" class="collapse show">
+          <div class="card-body">
+            <p><strong>Task:</strong> Build a REST endpoint <code>/import</code> to accept a CSV of users, validate fields, deduplicate by email, upsert into Postgres, and return a summary. Target: ~200k rows/file. Idempotent.</p>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border rounded-2">
+                  <h3 class="h6 text-primary mb-2">Senior-level outcome</h3>
+                  <ul class="mb-2">
+                    <li>Layered: API, service, repository, schema validators.</li>
+                    <li>Typed models, streaming CSV, batching, idempotency keys.</li>
+                    <li>Structured logs, metrics, env-config, CI, pinned deps.</li>
+                    <li>Unit + integration tests; property-based fuzzing.</li>
+                  </ul>
+                  <details>
+                    <summary class="mb-2">Illustrative snippets (FastAPI + asyncpg)</summary>
+                    <pre class="bg-light p-2 rounded-2"><code># app/api.py
+from fastapi import FastAPI, UploadFile, HTTPException, Header
+from app.service import import_users
+import logging
+
+logger = logging.getLogger(__name__)
+app = FastAPI()
+
+@app.post("/import")
+async def import_csv(file: UploadFile, x_idempotency_key: str | None = Header(default=None)):
+    if file.content_type not in {"text/csv", "application/vnd.ms-excel"}:
+        raise HTTPException(status_code=415, detail="Unsupported media type")
+    try:
+        result = await import_users(file, idempotency_key=x_idempotency_key)
+        return result.model_dump()
+    except Exception:
+        logger.exception("Import failed")
+        raise HTTPException(status_code=500, detail="Internal error")</code></pre>
+                    <pre class="bg-light p-2 rounded-2"><code># app/repo.py
+import asyncpg
+
+UPSERT_SQL = """
+INSERT INTO users (email, name, age, updated_at)
+VALUES ($1, $2, $3, NOW())
+ON CONFLICT (email) DO UPDATE
+SET name = EXCLUDED.name, age = EXCLUDED.age, updated_at = NOW()
+"""
+
+async def upsert_users_batch(rows, idem_key: str | None):
+    async with acquire_connection() as conn:
+        async with conn.transaction():
+            batch, BATCH_SIZE = [], 1000
+            for r in rows:
+                batch.append(r)
+                if len(batch) == BATCH_SIZE:
+                    await conn.executemany(UPSERT_SQL, batch)
+                    batch.clear()
+            if batch:
+                await conn.executemany(UPSERT_SQL, batch)</code></pre>
+                  </details>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded-2">
+                  <h3 class="h6 text-secondary mb-2">Mid-level outcome</h3>
+                  <ul class="mb-2">
+                    <li>Single module or thin separation.</li>
+                    <li>Loads CSV into memory; simple upsert; fewer checks.</li>
+                    <li>Basic logging; minimal tests (happy path).</li>
+                  </ul>
+                  <details>
+                    <summary class="mb-2">Illustrative snippet (simplified)</summary>
+                    <pre class="bg-light p-2 rounded-2"><code># app.py
+from fastapi import FastAPI, UploadFile, HTTPException
+import csv, io, asyncpg
+
+app = FastAPI()
+
+@app.post("/import")
+async def import_csv(file: UploadFile):
+    if file.content_type != "text/csv":
+        raise HTTPException(415, "CSV required")
+    text = io.StringIO((await file.read()).decode("utf-8"))
+    reader = csv.DictReader(text)
+    conn = await asyncpg.connect("postgresql://user:pass@localhost/db")
+    async with conn.transaction():
+        for row in reader:
+            await conn.execute("""
+                INSERT INTO users (email, name, age)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (email) DO UPDATE SET name=$2, age=$3
+            """, row["email"], row.get("name",""), int(row.get("age",0)))
+    await conn.close()
+    return {"ok": True}</code></pre>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side-by-side summary table -->
+    <section id="summary" class="mb-4">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">Side-by-side Summary</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#sum1">Toggle</button>
+        </div>
+        <div id="sum1" class="collapse show">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped align-middle">
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Senior Outcome</th>
+                    <th>Mid Outcome</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Requirements</td>
+                    <td>Clarifies, challenges, defines SLOs</td>
+                    <td>Accepts as-is</td>
+                  </tr>
+                  <tr>
+                    <td>Design</td>
+                    <td>Layered, extensible, clean contracts</td>
+                    <td>Minimal layers, some coupling</td>
+                  </tr>
+                  <tr>
+                    <td>Correctness</td>
+                    <td>Edge cases, idempotency, retries</td>
+                    <td>Happy path + basic errors</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Streaming, batching, async; measured</td>
+                    <td>In-memory, naive loops</td>
+                  </tr>
+                  <tr>
+                    <td>Testing</td>
+                    <td>Unit + integration + failure modes</td>
+                    <td>Mostly happy-path unit tests</td>
+                  </tr>
+                  <tr>
+                    <td>Operations</td>
+                    <td>Structured logs, metrics, health checks</td>
+                    <td>Basic logs, few/no metrics</td>
+                  </tr>
+                  <tr>
+                    <td>Security</td>
+                    <td>Secrets mgmt, sanitization, pinned deps</td>
+                    <td>Basic validation</td>
+                  </tr>
+                  <tr>
+                    <td>Docs &amp; DevEx</td>
+                    <td>README, ADRs, CI/CD, rollbacks</td>
+                    <td>Short README, manual steps</td>
+                  </tr>
+                  <tr>
+                    <td>Maintainability</td>
+                    <td>Safe to change; minimized debt</td>
+                    <td>Debt accumulates faster</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-muted mb-0"><small>Use this as a checklist for code reviews and design proposals.</small></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- When each is good enough -->
+    <section id="good-enough" class="mb-4">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">When is each “good enough”?</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#ge1">Toggle</button>
+        </div>
+        <div id="ge1" class="collapse show">
+          <div class="card-body">
+            <ul class="mb-0">
+              <li><strong>Mid-level output:</strong> Prototypes, internal tools, low-volume tasks, or when speed &gt; robustness.</li>
+              <li><strong>Senior output:</strong> Production-critical paths, higher scale, multi-team ownership, regulated data.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to nudge mid -> senior -->
+    <section id="nudge" class="mb-5">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">Nudging Mid-level Toward Senior Quality</h2>
+          <button class="btn btn-sm btn-outline-secondary no-print" data-bs-toggle="collapse" data-bs-target="#nd1">Toggle</button>
+        </div>
+        <div id="nd1" class="collapse show">
+          <div class="card-body">
+            <ol class="mb-0">
+              <li><strong>Add boundaries:</strong> API ↔ service ↔ repository; isolate pure logic from I/O.</li>
+              <li><strong>Type &amp; document:</strong> Use <code>typing</code>, docstrings, explicit contracts.</li>
+              <li><strong>Validate early:</strong> Schema validation; fail fast and defensively.</li>
+              <li><strong>Stream &amp; batch:</strong> Avoid loading entire files; control transaction scope.</li>
+              <li><strong>Add observability:</strong> Structured logs, metrics, tracing IDs.</li>
+              <li><strong>Test failure modes:</strong> Malformed CSV, duplicates, DB errors, timeouts.</li>
+              <li><strong>Ship with guardrails:</strong> Feature flags, CI, rollbacks, pinned dependencies.</li>
+              <li><strong>Write the README:</strong> Assumptions, runbook, known limits, trade-offs.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center text-muted small pb-5">
+      <div>© <span id="year"></span> Senior vs Mid Outcomes — Printable Summary</div>
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS (bundle includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Dates
+    (function setDates() {
+      const now = new Date();
+      const dateFmt = now.toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      });
+      document.getElementById('generatedDate').textContent = dateFmt;
+      document.getElementById('year').textContent = now.getFullYear();
+    })();
+
+    // Print
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Download PDF using html2pdf
+    document.getElementById('btnDownloadPdf').addEventListener('click', async () => {
+      const element = document.getElementById('content');
+      const opt = {
+        margin:       [10, 10, 12, 10],   // top, left, bottom, right (mm)
+        filename:     'senior-vs-mid-outcomes.pdf',
+        image:        { type: 'jpeg', quality: 0.96 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'] } // honors .page-break
+      };
+      // Small delay to ensure fonts/layout settle
+      await new Promise(r => setTimeout(r, 50));
+      html2pdf().from(element).set(opt).save();
+    });
+
+    // Expand/Collapse all collapse elements inside #content
+    const allCollapsesSelector = '#content .collapse';
+    document.getElementById('btnExpandAll').addEventListener('click', () => {
+      document.querySelectorAll(allCollapsesSelector).forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        c.show();
+      });
+    });
+    document.getElementById('btnCollapseAll').addEventListener('click', () => {
+      document.querySelectorAll(allCollapsesSelector).forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        c.hide();
+      });
+    });
+  </script>
+</body>
+</html>
