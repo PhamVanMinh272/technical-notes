@@ -653,18 +653,7 @@ async def import_csv(file: UploadFile):
 
     // Download PDF using html2pdf
     document.getElementById('btnDownloadPdf').addEventListener('click', async () => {
-      const element = document.getElementById('content');
-      const opt = {
-        margin:       [10, 10, 12, 10],   // top, left, bottom, right (mm)
-        filename:     'senior-vs-mid-outcomes.pdf',
-        image:        { type: 'jpeg', quality: 0.96 },
-        html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['css', 'legacy'] } // honors .page-break
-      };
-      // Small delay to ensure fonts/layout settle
-      await new Promise(r => setTimeout(r, 50));
-      html2pdf().from(element).set(opt).save();
+      window.print();
     });
 
     // Expand/Collapse all collapse elements inside #content
