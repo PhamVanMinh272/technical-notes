@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bug Report Workflow — Senior Python Developer</title>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    /* ---------- Base styles ---------- */
+    body {
+      background: #f8f9fa;
+      color: #212529;
+    }
+    .hero {
+      background: linear-gradient(180deg, #ffffff, #f2f4f6);
+      border: 1px solid #e9ecef;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+    }
+    .step-number {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #0d6efd;
+      color: #fff;
+      font-weight: 600;
+      margin-right: .5rem;
+      font-size: 0.95rem;
+    }
+    .subtle {
+      color: #6c757d;
+      font-size: .95rem;
+    }
+    .kbd {
+      border: 1px solid #dee2e6;
+      background: #f8f9fa;
+      border-radius: .2rem;
+      padding: .05rem .35rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .75rem;
+    }
+    .flow .node {
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: .5rem;
+      padding: .75rem 1rem;
+      position: relative;
+    }
+    .flow .arrow {
+      text-align: center;
+      color: #adb5bd;
+      font-size: 1.25rem;
+      user-select: none;
+    }
+    @media (min-width: 992px) {
+      .flow {
+        grid-template-columns: repeat(9, 1fr);
+        align-items: center;
+      }
+      .flow .node, .flow .arrow {
+        margin-bottom: 0;
+      }
+    }
+
+    /* Checklist styling */
+    .checklist .form-check {
+      padding: .5rem .75rem;
+      border: 1px solid #e9ecef;
+      border-radius: .5rem;
+      background: #fff;
+      margin-bottom: .5rem;
+    }
+
+    /* ---------- Print styles ---------- */
+    @media print {
+      body { background: #fff; }
+      .no-print { display: none !important; }
+      .container { max-width: 100% !important; }
+      a[href]:after { content: ""; } /* Remove link URLs in print */
+      .accordion-button::after { display: none !important; } /* Hide caret in print */
+      .accordion-item { break-inside: avoid; page-break-inside: avoid; }
+      .page-break { break-before: page; page-break-before: always; }
+      @page { margin: 12mm; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-4 my-lg-5">
+    <!-- Header / Hero -->
+    <header class="hero shadow-sm">
+      <div class="d-flex flex-column flex-lg-row align-items-lg-center">
+        <div class="flex-grow-1">
+          <h1 class="h3 mb-1">Complete Workflow: Handling a Bug Report (Jira)</h1>
+          <p class="subtle mb-0">
+            A senior Python developer’s end‑to‑end checklist: from triage and reproduction to fix, tests, review, deployment, and post‑release verification.
+          </p>
+        </div>
+        <div class="ms-lg-3 mt-3 mt-lg-0 no-print">
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="window.print()">
+              🖨️ Print
+            </button>
+            <button class="btn btn-outline-secondary" id="expandAllBtn">Expand All</button>
+            <button class="btn btn-outline-secondary" id="collapseAllBtn">Collapse All</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Quick Tips -->
+    <section class="mt-3">
+      <div class="alert alert-info mb-0">
+        <strong>Tip:</strong> Save time by writing a <em>failing test</em> before fixing, and link your PR to the Jira ticket. Use <span class="kbd">pytest</span>,
+        <span class="kbd">ruff</span>, <span class="kbd">mypy</span>, and <span class="kbd">black</span> in CI for guardrails.
+      </div>
+    </section>
+
+    <!-- Accordion Steps -->
+    <section class="mt-4">
+      <div class="accordion" id="bugWorkflow">
+        <!-- 1 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#step1" aria-expanded="true" aria-controls="step1">
+              <span class="step-number">1</span> Read & Understand the Ticket
+            </button>
+          </h2>
+          <div id="step1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Read summary + description thoroughly.</li>
+                <li>Confirm expected vs. actual behavior, steps to reproduce, environment(s).</li>
+                <li>Collect logs, screenshots, traces. Ask clarifying questions in Jira if needed.</li>
+              </ul>
+              <div class="small text-muted">Goal: Ensure the problem is fully understood before touching code.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step2" aria-expanded="false" aria-controls="step2">
+              <span class="step-number">2</span> Validate Severity & Impact
+            </button>
+          </h2>
+          <div id="step2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Classify: blocker, critical, major, minor.</li>
+                <li>Assess user impact, production workflow stops, and potential security implications.</li>
+                <li>Align priority with PM/lead if mismatched.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step3" aria-expanded="false" aria-controls="step3">
+              <span class="step-number">3</span> Reproduce the Bug Locally
+            </button>
+          </h2>
+          <div id="step3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Follow exact reproduction steps. Try edge inputs.</li>
+                <li>Leverage logs/crash reports if steps are incomplete.</li>
+                <li>If not reproducible, request more details (“Cannot reproduce”).</li>
+              </ul>
+              <div class="small text-muted">You must see the bug yourself before fixing it.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading4">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step4" aria-expanded="false" aria-controls="step4">
+              <span class="step-number">4</span> Identify the Root Cause
+            </button>
+          </h2>
+          <div id="step4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Study stack traces; add temporary logging.</li>
+                <li>Use <span class="kbd">pdb</span>/<span class="kbd">ipdb</span> breakpoints; bisect recent commits.</li>
+                <li>Write a minimal repro to isolate the failure.</li>
+              </ul>
+              <div class="small text-muted">Avoid patching symptoms—fix the true cause.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading5">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step5" aria-expanded="false" aria-controls="step5">
+              <span class="step-number">5</span> Create/Update Automated Tests (Failing First)
+            </button>
+          </h2>
+          <div id="step5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Add failing unit/integration test to capture the bug.</li>
+                <li>Run in CI to prove repro and guard against regressions.</li>
+                <li>Prefer minimal fixtures and deterministic inputs.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading6">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step6" aria-expanded="false" aria-controls="step6">
+              <span class="step-number">6</span> Implement the Fix
+            </button>
+          </h2>
+          <div id="step6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Write clear, maintainable code; follow PEP8 and type hints.</li>
+                <li>Mind performance; document non‑obvious decisions.</li>
+                <li>Keep changes scoped; avoid unrelated refactors.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading7">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step7" aria-expanded="false" aria-controls="step7">
+              <span class="step-number">7</span> Run Full Test Suite & Quality Gates
+            </button>
+          </h2>
+          <div id="step7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Run <span class="kbd">pytest</span>, <span class="kbd">ruff</span>/<span class="kbd">flake8</span>, <span class="kbd">mypy</span>, <span class="kbd">black --check</span>.</li>
+                <li>Fix any regressions; ensure CI is green.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading8">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step8" aria-expanded="false" aria-controls="step8">
+              <span class="step-number">8</span> Test in a Realistic Environment
+            </button>
+          </h2>
+          <div id="step8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Validate in dev/staging, Docker, or ephemeral envs.</li>
+                <li>Confirm expected behavior and check for side effects.</li>
+                <li>Verify integrations (DB, cache, queues, APIs, etc.).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading9">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step9" aria-expanded="false" aria-controls="step9">
+              <span class="step-number">9</span> Update Documentation (If Needed)
+            </button>
+          </h2>
+          <div id="step9" class="accordion-collapse collapse" aria-labelledby="heading9" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Update code comments, API docs, READMEs, runbooks.</li>
+                <li>Capture config/deploy notes, feature flags, and migrations.</li>
+              </ul>
+              <div class="small text-muted">Strong teams document. It compounds over time.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading10">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step10" aria-expanded="false" aria-controls="step10">
+              <span class="step-number">10</span> Submit Pull Request
+            </button>
+          </h2>
+          <div id="step10" class="accordion-collapse collapse" aria-labelledby="heading10" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Clear title; link the Jira ticket.</li>
+                <li>Explain root cause, fix strategy, and test evidence.</li>
+                <li>Add screenshots/logs of passing tests or manual checks.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading11">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step11" aria-expanded="false" aria-controls="step11">
+              <span class="step-number">11</span> Address Code Review Feedback
+            </button>
+          </h2>
+          <div id="step11" class="accordion-collapse collapse" aria-labelledby="heading11" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Respond respectfully; discuss trade‑offs when needed.</li>
+                <li>Update code/tests; keep commits focused.</li>
+                <li>Re‑run CI; keep reviewers in the loop.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading12">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step12" aria-expanded="false" aria-controls="step12">
+              <span class="step-number">12</span> Merge & Deploy
+            </button>
+          </h2>
+          <div id="step12" class="accordion-collapse collapse" aria-labelledby="heading12" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Use the team’s merge strategy (merge/squash/rebase).</li>
+                <li>Let CI/CD complete; deploy to staging → production.</li>
+                <li>Follow change management and approvals.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading13">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step13" aria-expanded="false" aria-controls="step13">
+              <span class="step-number">13</span> Verify After Deployment
+            </button>
+          </h2>
+          <div id="step13" class="accordion-collapse collapse" aria-labelledby="heading13" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Smoke test in production; monitor logs/metrics/traces.</li>
+                <li>Confirm no regressions or collateral damage.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading14">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step14" aria-expanded="false" aria-controls="step14">
+              <span class="step-number">14</span> Final Jira Comment & Close
+            </button>
+          </h2>
+          <div id="step14" class="accordion-collapse collapse" aria-labelledby="heading14" data-bs-parent="#bugWorkflow">
+            <div class="accordion-body">
+              <ul>
+                <li>Describe root cause, fix, and prevention ideas.</li>
+                <li>Link PRs; add repro/fix steps for posterity.</li>
+                <li>Mark ticket as Resolved/Done.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flowchart -->
+    <section class="mt-5">
+      <h2 class="h5 mb-3">Summary Flowchart</h2>
+      <div class="flow">
+        <div class="node">Receive Ticket</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Understand Issue</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Reproduce Bug</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Root Cause</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Failing Test</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Implement Fix</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Tests & QA</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">PR & Review</div>
+        <div class="arrow d-none d-lg-block">→</div>
+        <div class="node">Deploy & Verify</div>
+      </div>
+    </section>
+
+    <!-- Checklist -->
+    <section class="mt-5">
+      <h2 class="h5 mb-3">Printable Checklist</h2>
+      <div class="checklist" id="checklist">
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk1">
+          <label class="form-check-label" for="chk1">Ticket understood (expected vs. actual, repro steps, environment)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk2">
+          <label class="form-check-label" for="chk2">Severity/priority validated with owner/PO</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk3">
+          <label class="form-check-label" for="chk3">Bug reproduced locally or in a suitable environment</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk4">
+          <label class="form-check-label" for="chk4">Root cause identified (not just symptoms)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk5">
+          <label class="form-check-label" for="chk5">Failing test added (unit/integration)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk6">
+          <label class="form-check-label" for="chk6">Fix implemented (clean, maintainable, documented)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk7">
+          <label class="form-check-label" for="chk7">All tests & quality gates passing</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk8">
+          <label class="form-check-label" for="chk8">Validated in staging/dev (no side effects)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk9">
+          <label class="form-check-label" for="chk9">Docs updated (comments, README, runbooks)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk10">
+          <label class="form-check-label" for="chk10">PR submitted with clear description and Jira link</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk11">
+          <label class="form-check-label" for="chk11">Review feedback addressed & CI green</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk12">
+          <label class="form-check-label" for="chk12">Merged & deployed via approved process</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk13">
+          <label class="form-check-label" for="chk13">Post‑deploy verification & monitoring done</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input checklist-item" type="checkbox" value="" id="chk14">
+          <label class="form-check-label" for="chk14">Final Jira comment added & ticket closed</label>
+        </div>
+      </div>
+      <div class="mt-2 subtle">Your checklist state is saved locally in this browser and will print as checked/unchecked.</div>
+      <div class="no-print mt-3">
+        <button class="btn btn-outline-danger btn-sm" id="resetChecklist">Reset Checklist</button>
+      </div>
+    </section>
+
+    <footer class="mt-5 pt-3 border-top subtle">
+      Last updated: <span id="lastUpdated"></span>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+
+  <script>
+    // ----- Expand/Collapse All -----
+    (function() {
+      const expandBtn = document.getElementById('expandAllBtn');
+      const collapseBtn = document.getElementById('collapseAllBtn');
+      expandBtn.addEventListener('click', () => {
+        document.querySelectorAll('#bugWorkflow .accordion-collapse').forEach(el => {
+          const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+          c.show();
+        });
+      });
+      collapseBtn.addEventListener('click', () => {
+        document.querySelectorAll('#bugWorkflow .accordion-collapse').forEach(el => {
+          const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+          c.hide();
+        });
+      });
+    })();
+
+    // ----- Checklist localStorage persistence -----
+    (function() {
+      const STORAGE_KEY = 'bug_workflow_checklist_v1';
+      const items = document.querySelectorAll('.checklist-item');
+      const resetBtn = document.getElementById('resetChecklist');
+
+      function load() {
+        try {
+          const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+          items.forEach((el, idx) => {
+            el.checked = !!state['i' + idx];
+          });
+        } catch (_) {}
+      }
+      function save() {
+        const state = {};
+        items.forEach((el, idx) => {
+          state['i' + idx] = el.checked ? 1 : 0;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+      items.forEach(el => el.addEventListener('change', save));
+      resetBtn.addEventListener('click', () => {
+        items.forEach(el => el.checked = false);
+        save();
+      });
+      load();
+    })();
+
+    // ----- Last updated stamp -----
+    (function() {
+      const el = document.getElementById('lastUpdated');
+      const now = new Date();
+      const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+      el.textContent = now.toLocaleDateString(undefined, opts);
+    })();
+  </script>
+</body>
+</html>

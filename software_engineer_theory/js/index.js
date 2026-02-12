@@ -3,6 +3,7 @@ const interviews = [
   { title: "What is a Senior Python Developer?", file: "what-is-a-senior-python-developer.html" },
   { title: "Database Knowledge Guides", file: "database-knowledge-guides.html" },
   { title: "How to implement a task", file: "how-to-implement-a-task.html" },
+  { title: "Fix bugs", file: "fix-bug.html" },
   { title: "Diff Senior/Middle delivery", file: "diff-senior-middle-delivery.html"}
 ];
 
