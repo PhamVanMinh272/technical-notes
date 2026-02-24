@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Senior API Implementation Checklist</title>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    :root {
+      --base-font: 12px;   /* UI density (change via slider) */
+      --card-pad: 12px;
+      --gap: 12px;
+    }
+
+    body {
+      font-size: var(--base-font);
+      line-height: 1.3;
+      background: #f6f7f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffffcc;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 8px 12px;
+    }
+
+    .container-limit {
+      max-width: 1000px;
+    }
+
+    .section.card {
+      padding: var(--card-pad);
+      margin-bottom: var(--gap);
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .section h2 {
+      font-size: 1.1rem;
+      margin: 0 0 6px 0;
+      font-weight: 700;
+    }
+
+    .section h3 {
+      font-size: 1rem;
+      margin: 10px 0 6px 0;
+      font-weight: 600;
+    }
+
+    .muted {
+      color: #6b7280;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .checklist input[type="checkbox"] {
+      margin-top: 1px;
+      transform: translateY(1px);
+    }
+
+    .small-note {
+      font-size: 0.95em;
+      color: #6b7280;
+    }
+
+    /* Print styles */
+    @media print {
+      @page {
+        size: A4 portrait;   /* switch to 'A4 landscape' if you prefer */
+        margin: 8mm;
+      }
+      body {
+        background: #fff !important;
+      }
+      .topbar, .screen-only {
+        display: none !important;
+      }
+      .section.card {
+        border: 0;
+        box-shadow: none;
+        padding: 6px 8px;
+        margin-bottom: 6px;
+      }
+      h1 { font-size: 1.2rem; margin: 0 0 6px 0; }
+      .section h2 { font-size: 1.05rem; }
+      .section h3 { font-size: 0.98rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls -->
+  <div class="topbar">
+    <div class="container container-limit d-flex flex-wrap align-items-center" style="gap: 10px;">
+      <button class="btn btn-primary btn-sm" id="printBtn">Print</button>
+
+      <div class="d-flex align-items-center" style="gap: 8px;">
+        <label for="density" class="form-label m-0">Density</label>
+        <input type="range" id="density" min="10" max="15" value="14" />
+      </div>
+
+      <div class="ms-auto d-flex flex-wrap" style="gap: 8px;">
+        <button class="btn btn-outline-secondary btn-sm" id="expandAll">Expand all</button>
+        <button class="btn btn-outline-secondary btn-sm" id="collapseAll">Collapse all</button>
+        <button class="btn btn-outline-danger btn-sm" id="clearChecks">Clear checks</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container container-limit py-3">
+    <header class="mb-2">
+      <h1 class="text-center">Senior API Implementation Checklist</h1>
+      <p class="text-center small-note">
+        Use this as your SOP when implementing new APIs. Check items as you go.
+        <span class="screen-only">Your progress is saved locally in this browser.</span>
+      </p>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">1) Requirements & API Contract</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec1">toggle</button>
+      </div>
+      <div id="sec1" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="req-functional"> <label>Confirm functional requirements</label></li>
+          <li><input type="checkbox" data-k="req-edge-cases"> <label>Identify all edge cases</label></li>
+          <li><input type="checkbox" data-k="req-nfr"> <label>Identify non-functional requirements (security, performance, availability)</label></li>
+          <li><input type="checkbox" data-k="req-schemas"> <label>Define request &amp; response schemas</label></li>
+          <li><input type="checkbox" data-k="req-error-model"> <label>Define error model (error codes, messages, retry rules)</label></li>
+          <li><input type="checkbox" data-k="req-acceptance"> <label>Define acceptance criteria</label></li>
+          <li><input type="checkbox" data-k="req-openapi-first"> <label>Produce OpenAPI/Swagger spec <em>before coding</em></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">2) Architecture & Design</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec2">toggle</button>
+      </div>
+      <div id="sec2" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="arch-framework"> <label>Choose framework (FastAPI/Flask/Django)</label></li>
+          <li><input type="checkbox" data-k="arch-async"> <label>Choose sync vs async</label></li>
+          <li><input type="checkbox" data-k="arch-boundaries"> <label>Define service boundaries &amp; business logic layers</label></li>
+          <li><input type="checkbox" data-k="arch-data-model"> <label>Define DB schema or object model</label></li>
+          <li><input type="checkbox" data-k="arch-caching"> <label>Define caching strategy (if needed)</label></li>
+          <li><input type="checkbox" data-k="arch-idempotency"> <label>Define idempotency requirements</label></li>
+          <li><input type="checkbox" data-k="arch-validation"> <label>Plan validation strategy (payload, type hints, Pydantic)</label></li>
+          <li><input type="checkbox" data-k="arch-observability"> <label>Plan logging / metrics / tracing requirements</label></li>
+          <li><input type="checkbox" data-k="arch-security"> <label>Confirm security model (auth, roles/scopes, data sanitization)</label></li>
+          <li><input type="checkbox" data-k="arch-adrs"> <label>Document major design decisions (ADRs)</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">3) Implementation Plan</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec3">toggle</button>
+      </div>
+      <div id="sec3" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="plan-modules"> <label>Break task into small modules (router → handler → service → repo)</label></li>
+          <li><input type="checkbox" data-k="plan-reuse"> <label>Identify reusable components</label></li>
+          <li><input type="checkbox" data-k="plan-pseudocode"> <label>Outline pseudocode or structure</label></li>
+          <li><input type="checkbox" data-k="plan-tests"> <label>List test scenarios (unit, integration, negative, contract)</label></li>
+          <li><input type="checkbox" data-k="plan-estimate"> <label>Estimate effort &amp; dependencies</label></li>
+          <li><input type="checkbox" data-k="plan-risks"> <label>Identify risks + mitigations</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">4) Coding</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec4">toggle</button>
+      </div>
+      <div id="sec4" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="code-validation"> <label>Implement request models + validation</label></li>
+          <li><input type="checkbox" data-k="code-business"> <label>Implement business logic cleanly (small functions, cohesive modules)</label></li>
+          <li><input type="checkbox" data-k="code-dal"> <label>Implement data access layer</label></li>
+          <li><input type="checkbox" data-k="code-errors"> <label>Handle all error paths gracefully</label></li>
+          <li><input type="checkbox" data-k="code-logging"> <label>Add meaningful logging (no sensitive data)</label></li>
+          <li><input type="checkbox" data-k="code-correlation"> <label>Add correlation ID for traceability</label></li>
+          <li><input type="checkbox" data-k="code-perf"> <label>Apply performance-conscious patterns (batching, caching, async)</label></li>
+          <li><input type="checkbox" data-k="code-types"> <label>Use type hints everywhere</label></li>
+          <li><input type="checkbox" data-k="code-docs"> <label>Add docstrings &amp; comments where needed</label></li>
+          <li><input type="checkbox" data-k="code-standards"> <label>Follow internal coding guidelines</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">5) Testing</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec5">toggle</button>
+      </div>
+      <div id="sec5" class="collapse show">
+        <h3>Unit Tests</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="test-unit-core"> <label>Core logic</label></li>
+          <li><input type="checkbox" data-k="test-unit-edges"> <label>Edge cases</label></li>
+          <li><input type="checkbox" data-k="test-unit-errors"> <label>Error conditions</label></li>
+        </ul>
+        <h3>Integration Tests</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="test-int-routing"> <label>Routing works</label></li>
+          <li><input type="checkbox" data-k="test-int-validation"> <label>Validation works</label></li>
+          <li><input type="checkbox" data-k="test-int-db"> <label>DB/Queue interactions tested</label></li>
+          <li><input type="checkbox" data-k="test-int-auth"> <label>Auth scenarios tested</label></li>
+        </ul>
+        <h3>Contract Tests</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="test-contract-openapi"> <label>Validate API matches OpenAPI spec</label></li>
+          <li><input type="checkbox" data-k="test-contract-examples"> <label>Example payload tests</label></li>
+        </ul>
+        <h3>Negative Tests</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="test-neg-invalid"> <label>Invalid JSON / malformed payloads</label></li>
+          <li><input type="checkbox" data-k="test-neg-missing"> <label>Missing/extra fields</label></li>
+          <li><input type="checkbox" data-k="test-neg-permission"> <label>Permission/auth failures</label></li>
+          <li><input type="checkbox" data-k="test-neg-idempotency"> <label>Rate-limit or idempotency scenarios</label></li>
+        </ul>
+        <h3>Performance Checks</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="test-perf-latency"> <label>Baseline p95/p99 latency</label></li>
+          <li><input type="checkbox" data-k="test-perf-smoke"> <label>Smoke load test (optional)</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">6) Documentation</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec6">toggle</button>
+      </div>
+      <div id="sec6" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="docs-openapi"> <label>Update OpenAPI/Swagger</label></li>
+          <li><input type="checkbox" data-k="docs-examples"> <label>Provide request/response examples</label></li>
+          <li><input type="checkbox" data-k="docs-errors"> <label>Document error responses</label></li>
+          <li><input type="checkbox" data-k="docs-snippets"> <label>Provide curl/Postman examples</label></li>
+          <li><input type="checkbox" data-k="docs-readme"> <label>Update service README</label></li>
+          <li><input type="checkbox" data-k="docs-migrations"> <label>Add migration notes (if breaking changes)</label></li>
+          <li><input type="checkbox" data-k="docs-changelog"> <label>Update changelog</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 7 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">7) Deployment & Observability</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec7">toggle</button>
+      </div>
+      <div id="sec7" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="deploy-ci"> <label>CI pipeline passes (lint, type check, tests)</label></li>
+          <li><input type="checkbox" data-k="deploy-dashboards"> <label>Add necessary dashboards</label></li>
+          <li><input type="checkbox" data-k="deploy-metrics"> <label>Add metrics (RPS, latency, error rate)</label></li>
+          <li><input type="checkbox" data-k="deploy-logging"> <label>Add logging fields (request ID, user/tenant, operation)</label></li>
+          <li><input type="checkbox" data-k="deploy-tracing"> <label>Add trace spans</label></li>
+          <li><input type="checkbox" data-k="deploy-flags"> <label>Implement feature flag or safe rollout</label></li>
+          <li><input type="checkbox" data-k="deploy-health"> <label>Validate health checks</label></li>
+          <li><input type="checkbox" data-k="deploy-rollback"> <label>Confirm rollback procedure</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 8 -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">8) Post‑Deployment Validation</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec8">toggle</button>
+      </div>
+      <div id="sec8" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="post-logs"> <label>Validate logs (no unexpected warnings/errors)</label></li>
+          <li><input type="checkbox" data-k="post-metrics"> <label>Validate metrics (latency, error rate, spikes)</label></li>
+          <li><input type="checkbox" data-k="post-smoke"> <label>Test real traffic manually (smoke test)</label></li>
+          <li><input type="checkbox" data-k="post-idempotency"> <label>Verify idempotency &amp; retries behave correctly</label></li>
+          <li><input type="checkbox" data-k="post-feedback"> <label>Collect feedback from FE/QA/PM</label></li>
+          <li><input type="checkbox" data-k="post-patch"> <label>Patch quickly if needed</label></li>
+          <li><input type="checkbox" data-k="post-backlog"> <label>Add improvements to backlog</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BONUS SELF-CHECK -->
+    <section class="section card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">⭐ Senior vs Mid-Level Self‑Check</h2>
+        <button class="btn btn-sm btn-link" data-bs-toggle="collapse" data-bs-target="#sec9">toggle</button>
+      </div>
+      <div id="sec9" class="collapse show">
+        <ul class="checklist">
+          <li><input type="checkbox" data-k="self-systemic"> <label>Did I think about the whole system, not just the endpoint?</label></li>
+          <li><input type="checkbox" data-k="self-edges"> <label>Did I cover edge cases before writing code?</label></li>
+          <li><input type="checkbox" data-k="self-docs"> <label>Can someone onboard quickly from my documentation?</label></li>
+          <li><input type="checkbox" data-k="self-observability"> <label>Can we monitor/alert this API in production?</label></li>
+          <li><input type="checkbox" data-k="self-future"> <label>Is this API future-proof (extendable, stable contracts)?</label></li>
+          <li><input type="checkbox" data-k="self-resilience"> <label>Can this code survive heavy load or partial failures?</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <p class="small-note">
+      <strong>Print tips:</strong> Use the Density slider to adjust font size. In the browser print dialog, try Scale ~85–95% to fit on a single A4 page.
+    </p>
+
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"></script>
+
+  <script>
+    // ----- Density slider (font size + spacing) -----
+    const density = document.getElementById('density');
+    const setDensity = (val) => {
+      document.documentElement.style.setProperty('--base-font', val + 'px');
+      document.documentElement.style.setProperty('--card-pad', Math.max(8, Math.round(val)) + 'px');
+      document.documentElement.style.setProperty('--gap', Math.max(8, Math.round(val)) + 'px');
+    };
+    setDensity(density.value);
+    density.addEventListener('input', (e) => setDensity(e.target.value));
+
+    // ----- Print button -----
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+    // ----- Expand/Collapse all -----
+    const allCollapses = () => Array.from(document.querySelectorAll('.collapse'));
+    document.getElementById('expandAll').addEventListener('click', () => {
+      allCollapses().forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        c.show();
+      });
+    });
+    document.getElementById('collapseAll').addEventListener('click', () => {
+      allCollapses().forEach(el => {
+        const c = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        c.hide();
+      });
+    });
+
+    // ----- Persist checkbox state in localStorage -----
+    const STORAGE_KEY = 'api-checklist-state-v1';
+    const boxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-k]'));
+
+    function saveState() {
+      const state = {};
+      boxes.forEach(b => state[b.dataset.k] = b.checked ? 1 : 0);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        boxes.forEach(b => {
+          const k = b.dataset.k;
+          if (state && Object.prototype.hasOwnProperty.call(state, k)) {
+            b.checked = !!state[k];
+          }
+        });
+      } catch (_) {}
+    }
+
+    boxes.forEach(b => b.addEventListener('change', saveState));
+    loadState();
+
+    // ----- Clear checks -----
+    document.getElementById('clearChecks').addEventListener('click', () => {
+      boxes.forEach(b => b.checked = false);
+      saveState();
+    });
+  </script>
+</body>
+</html>
