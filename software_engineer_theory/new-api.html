@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Senior Python Engineer – API Implementation (Full)</title>
+  <meta name="description" content="Full senior-level API implementation workflow and senior vs mid-level comparison. Print-optimized to fit on one page." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --base-font: 12px;   /* default density */
+      --card-pad: 10px;
+      --gap: 10px;
+    }
+
+    body {
+      font-size: var(--base-font);
+      line-height: 1.25;
+      background: #f5f7f9;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 6px 0;
+      font-weight: 700;
+    }
+    h1 { font-size: 1.35rem; }
+    h2 { font-size: 1.15rem; }
+    h3 { font-size: 1.05rem; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      padding: 8px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+    }
+
+    .container-limit {
+      max-width: 1200px;
+    }
+
+    .meta {
+      color: #6b7280;
+      font-size: 0.95em;
+      margin-bottom: 8px;
+    }
+
+    .card {
+      padding: var(--card-pad);
+      margin-bottom: var(--gap);
+      border: 1px solid #e5e7eb;
+      box-shadow: none;
+      background: #fff;
+    }
+
+    .section-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .compact-list {
+      margin: 4px 0 6px 1rem;
+      padding: 0;
+    }
+    .compact-list li {
+      margin: 0 0 3px 0;
+    }
+
+    .deliverables {
+      margin-top: 4px;
+      border-left: 3px solid #0d6efd;
+      padding-left: 8px;
+      background: #f8fbff;
+    }
+
+    .badge-tag {
+      font-weight: 600;
+      letter-spacing: .01em;
+      margin-right: 4px;
+    }
+
+    .muted {
+      color: #6b7280;
+    }
+
+    /* Multi-column print layout for better density */
+    .print-columns {
+      column-gap: 14px;
+    }
+
+    /* Keep blocks intact across columns/pages */
+    .card, .no-break, table, .table {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    table.table {
+      font-size: 0.95em;
+    }
+    table.table th, table.table td {
+      padding: 4px 6px;
+    }
+
+    /* Print rules */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 6mm;
+      }
+      body {
+        background: #fff !important;
+      }
+      .topbar {
+        display: none !important;
+      }
+      .container-limit {
+        max-width: none;
+      }
+      .print-columns {
+        column-count: 2;
+      }
+      .card {
+        border: 0;
+        box-shadow: none;
+        padding: 6px 8px;
+        margin-bottom: 6px;
+      }
+      h1 { font-size: 1.15rem; margin-bottom: 4px; }
+      h2 { font-size: 1.05rem; }
+      h3 { font-size: 0.98rem; }
+      .deliverables {
+        border-left-color: #999;
+        background: #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls -->
+  <div class="topbar">
+    <button class="btn btn-primary btn-sm" id="printBtn">Print</button>
+    <div class="d-flex align-items-center" style="gap:8px">
+      <label for="density" class="form-label m-0">Density</label>
+      <input type="range" id="density" min="9" max="14" value="14" />
+      <small class="text-muted">Adjust font size to fit one page</small>
+    </div>
+    <div class="ms-auto small text-muted">
+      Senior Python Engineer — API Implementation (Full)
+    </div>
+  </div>
+
+  <main class="container container-limit py-3">
+    <header class="mb-2">
+      <h1 class="text-center">Senior-Level API Implementation Workflow</h1>
+      <p class="meta text-center">A practical, end-to-end checklist covering requirements, design, implementation, testing, documentation, deployment, observability, and post-release feedback — with a senior vs mid-level comparison.</p>
+    </header>
+
+    <div class="print-columns">
+
+      <!-- Section 1 -->
+      <section class="card">
+        <h2 class="section-title">1) Requirements Clarification & API Contract</h2>
+        <ul class="compact-list">
+          <li>Clarify functional scope: use cases, user journeys, inputs/outputs, success criteria.</li>
+          <li>Enumerate constraints: compliance, SLAs, rate limits, payload sizes, idempotency.</li>
+          <li>Non-functional: authN/authZ, performance targets (p95 latency, throughput), availability.</li>
+          <li>Define the API contract first (OpenAPI/Swagger): endpoints, methods, schemas, status codes, errors.</li>
+          <li>Identify edge cases early: timeouts, partial failures, invalid data, duplicate requests, eventual consistency.</li>
+          <li>Align with stakeholders (FE, QA, PM, SRE) — agree on acceptance criteria and versioning strategy.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>OpenAPI spec (paths, models, examples), clear acceptance criteria, definition of done.</li>
+            <li>Explicit error model (error codes, messages, remediation hints).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="card">
+        <h2 class="section-title">2) System Design & Architecture</h2>
+        <ul class="compact-list">
+          <li>Request flow: ingress → routing → validation → business logic → data access → response.</li>
+          <li>Data modeling & boundaries: DTOs vs domain models; avoid leaking internal schemas.</li>
+          <li>Error strategy: typed errors, mapping to HTTP codes, retries/backoff where safe.</li>
+          <li>Observability: structured logging, metrics (RPS, p95/p99 latency, error rate), tracing (span/trace IDs).</li>
+          <li>Concurrency & performance: sync/async, connection pools, batching, caching, pagination.</li>
+          <li>Tech choices with rationale: FastAPI/Flask/Django, Pydantic schema, Celery/RQ for async jobs, DB drivers.</li>
+          <li>Security: OAuth2/JWT, scopes/roles, input sanitization, secrets handling, SSRF/IDOR prevention.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Lightweight architecture diagram & ADRs (Architecture Decision Records) with trade-offs.</li>
+            <li>Validation plan: how we’ll prove performance, uptime, and correctness.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="card">
+        <h2 class="section-title">3) Implementation Planning</h2>
+        <ul class="compact-list">
+          <li>Break work into minimal, parallelizable tasks (routing, schema, handlers, services, repo, tests).</li>
+          <li>Sketch structure/pseudocode; define interfaces and contracts between layers.</li>
+          <li>Test-first mindset: identify unit, integration, and contract tests up front.</li>
+          <li>Dependencies & feature flags planned for safe rollout.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Implementation plan (in ticket/PR), ownership, estimation, risk list with mitigations.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="card">
+        <h2 class="section-title">4) Coding the API (Clean • Extensible • Secure)</h2>
+        <ul class="compact-list">
+          <li>Layered design: router → controller/handler → service → repository → client/gateway.</li>
+          <li>Validation: strict request schemas, type hints, Pydantic models, defensive programming.</li>
+          <li>Error-proof logic: consistent exceptions → HTTP mapping; graceful fallbacks.</li>
+          <li>Security: auth/roles, rate limiting, input sanitization, least privilege on data access.</li>
+          <li>Performance: async where I/O-bound, caching (per-request, app-level), efficient queries.</li>
+          <li>Maintainability: small functions, clear naming, SOLID, cohesive modules, no duplication.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Well-typed, readable code; docstrings and meaningful comments; reusable utilities.</li>
+            <li>Guardrails: centralized error handlers, request/response logging, correlation IDs.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section class="card">
+        <h2 class="section-title">5) Robust Automated Tests</h2>
+        <ul class="compact-list">
+          <li>Unit tests: pure functions, services; mock I/O; cover edge cases & error paths.</li>
+          <li>Integration tests: real routing, real validation, hitting test DB/queues where feasible.</li>
+          <li>Contract tests: validate API against OpenAPI; provider/consumer tests if multiple services.</li>
+          <li>Negative tests: malformed payloads, auth failures, timeouts, idempotency collisions.</li>
+          <li>Performance smoke: baseline latency/RPS locally or in staging.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>High-signal coverage with fast, deterministic tests; CI gate with clear thresholds.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section class="card">
+        <h2 class="section-title">6) Documentation</h2>
+        <ul class="compact-list">
+          <li>API reference: Swagger/Redoc with request/response examples and error bodies.</li>
+          <li>How-to guides: common scenarios, curl/HTTPie/postman snippets, auth examples.</li>
+          <li>Versioning & deprecations: policy, timelines, migration notes for breaking changes.</li>
+          <li>Service runbook: health checks, dependencies, common failures, SLOs.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Up-to-date OpenAPI + readable docs; onboarding-friendly README; changelog.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section class="card">
+        <h2 class="section-title">7) Deployment, Monitoring & Observability</h2>
+        <ul class="compact-list">
+          <li>CI/CD: lint/type/test gates, image build, migrations, smoke checks, rollout strategy.</li>
+          <li>Metrics: throughput, latency (p50/95/99), error rate, saturation; SLOs & alerts.</li>
+          <li>Logs: structured JSON, request IDs, user/tenant context, redaction of PII/secrets.</li>
+          <li>Tracing: spans for critical flows; propagating trace context across services.</li>
+          <li>Rollout: canary/gradual, feature flags, automated rollback on health regressions.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Dashboards, alert rules, runbooks; verified health checks; release checklist.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 8 -->
+      <section class="card">
+        <h2 class="section-title">8) Post-Deployment QA & Feedback Loop</h2>
+        <ul class="compact-list">
+          <li>Metrics review: error spikes, latency drift, saturation; compare to baseline.</li>
+          <li>Log audits for anomalies; verify idempotency and retry behavior in real traffic.</li>
+          <li>Stakeholder feedback: FE/QA/PM; confirm acceptance criteria in-prod.</li>
+          <li>Fast patches; backlog follow-ups; plan incremental enhancements.</li>
+        </ul>
+        <div class="deliverables">
+          <span class="badge bg-primary badge-tag">Deliverables</span>
+          <ul class="compact-list">
+            <li>Post-release report: what went well, risks observed, next steps.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Senior vs Mid-Level: Deep Comparison -->
+      <section class="card">
+        <h2 class="section-title">Senior vs Mid-Level — How Senior Delivery Excels</h2>
+
+        <h3>1) Systemic Thinking → Fewer Design Mistakes</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Designs for scalability, extensibility, and operability; anticipates constraints.</li>
+          <li><strong>Mid-level:</strong> Focuses on immediate task; future constraints discovered later.</li>
+          <li><em>Outcome:</em> Less rework, cleaner architecture, APIs that age well.</li>
+        </ul>
+
+        <h3>2) Contract-First Collaboration → Stability</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Publishes OpenAPI early; enables FE/QA/backend parallelism.</li>
+          <li><strong>Mid-level:</strong> Often documents after coding.</li>
+          <li><em>Outcome:</em> Fewer breaking changes, smoother cross-team development.</li>
+        </ul>
+
+        <h3>3) Edge Cases & Failure Modes → Reliability</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Plans for timeouts, upstream failures, bad inputs; builds graceful degradation.</li>
+          <li><strong>Mid-level:</strong> Happy-path first; edge cases addressed reactively.</li>
+          <li><em>Outcome:</em> APIs resilient under stress and partial failures.</li>
+        </ul>
+
+        <h3>4) Maintainable Code → Lower Long-Term Cost</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Clean abstractions, small cohesive modules, strong typing & docs.</li>
+          <li><strong>Mid-level:</strong> Solves the problem; code can get entangled as scope grows.</li>
+          <li><em>Outcome:</em> Faster iteration later, fewer bugs from coupling.</li>
+        </ul>
+
+        <h3>5) Strategic Testing → Confidence</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Units + integration + contract + negative + performance smoke.</li>
+          <li><strong>Mid-level:</strong> Unit tests with basic flows; fewer boundary tests.</li>
+          <li><em>Outcome:</em> Fewer production issues; safer refactors.</li>
+        </ul>
+
+        <h3>6) Built-In Observability → Faster Debugging</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Structured logs, metrics & traces wired in from day one.</li>
+          <li><strong>Mid-level:</strong> Logging present; metrics/tracing may be ad hoc.</li>
+          <li><em>Outcome:</em> Faster MTTR, clearer accountability.</li>
+        </ul>
+
+        <h3>7) Communication & Risk Management → Alignment</h3>
+        <ul class="compact-list">
+          <li><strong>Senior:</strong> Clear design docs, trade-offs, risks; aligns PM/SRE/QA/FE.</li>
+          <li><strong>Mid-level:</strong> Communicates well within the task, less on system-level impacts.</li>
+          <li><em>Outcome:</em> Fewer surprises, better delivery predictability.</li>
+        </ul>
+      </section>
+
+      <!-- Summary Table -->
+      <section class="card">
+        <h2 class="section-title">Summary — What Makes Senior-Level Delivery Better?</h2>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Capability</th>
+                <th>Mid-Level</th>
+                <th>Senior</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Requirements analysis</td>
+                <td>Understands tasks</td>
+                <td>Defines scope, edge cases, constraints, non-functionals</td>
+              </tr>
+              <tr>
+                <td>Architecture</td>
+                <td>Implements patterns</td>
+                <td>Designs patterns, decisions, and trade-offs</td>
+              </tr>
+              <tr>
+                <td>Coding quality</td>
+                <td>Good</td>
+                <td>Robust, scalable, secure, well-typed</td>
+              </tr>
+              <tr>
+                <td>Testing</td>
+                <td>Unit tests</td>
+                <td>Unit + integration + contract + negative + perf smoke</td>
+              </tr>
+              <tr>
+                <td>Observability</td>
+                <td>Basic logs</td>
+                <td>Logs, metrics, tracing, dashboards, alerts</td>
+              </tr>
+              <tr>
+                <td>Deployment</td>
+                <td>Follows process</td>
+                <td>Designs safe rollouts, CI gates, rollback paths</td>
+              </tr>
+              <tr>
+                <td>Communication</td>
+                <td>Task-focused</td>
+                <td>System-focused; aligns stakeholders</td>
+              </tr>
+              <tr>
+                <td>Risk management</td>
+                <td>Reactive</td>
+                <td>Proactive; anticipates failures and mitigations</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted mb-0"><em>Tip:</em> If printing still spans more than one page, use the Density slider (top) to reduce font size further, or switch your browser’s print “Scale” to 90–80%.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bootstrap JS (optional for this page, but included for completeness) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Print button
+    document.getElementById('printBtn').addEventListener('click', () => {
+      // Ensure any collapsibles (if added) are open before printing
+      if (window.matchMedia) {
+        const mediaQueryList = window.matchMedia('print');
+        const beforePrint = () => {};
+        const afterPrint = () => {};
+        if ('addListener' in mediaQueryList) {
+          mediaQueryList.addListener(mql => mql.matches ? beforePrint() : afterPrint());
+        } else if ('addEventListener' in mediaQueryList) {
+          mediaQueryList.addEventListener('change', e => e.matches ? beforePrint() : afterPrint());
+        }
+      }
+      window.print();
+    });
+
+    // Density slider → adjusts CSS variable for font size
+    const density = document.getElementById('density');
+    const setDensity = (val) => {
+      document.documentElement.style.setProperty('--base-font', val + 'px');
+      // Adjust spacing proportionally
+      document.documentElement.style.setProperty('--card-pad', Math.max(6, Math.round(val - 1)) + 'px');
+      document.documentElement.style.setProperty('--gap', Math.max(6, Math.round(val - 1)) + 'px');
+    };
+    setDensity(density.value);
+    density.addEventListener('input', e => setDensity(e.target.value));
+  </script>
+</body>
+</html>
