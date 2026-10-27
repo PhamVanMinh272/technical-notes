@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="A presentation about becoming an LLM Advanced Beginner."
+  >
+
+  <title>LLM Advanced Beginner</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main class="presentation" id="presentation">
+
+    <!-- Slide 1: Welcome -->
+    <section
+      class="slide active slide-hero"
+      data-slide-title="Welcome"
+      aria-hidden="false"
+    >
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+
+      <div class="slide-content hero-content">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          LLM Learning Journey
+        </div>
+
+        <p class="slide-number-label">01 / Welcome</p>
+
+        <h1>
+          LLM
+          <span>Advanced Beginner</span>
+        </h1>
+
+        <p class="hero-description">
+          Move beyond basic prompting. Learn to diagnose failures,
+          design reliable prompts, choose the right infrastructure,
+          and take responsibility for AI-assisted work.
+        </p>
+
+        <div class="hero-actions">
+          <button class="primary-button" type="button" data-go-next>
+            Start presentation
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <button class="secondary-button" type="button" data-go-slide="1">
+            View agenda
+          </button>
+        </div>
+
+        <div class="hero-footer">
+          <div class="presenter">
+            <span class="presenter-avatar">MP</span>
+
+            <div>
+              <strong>Minh Pham Van</strong>
+              <span>LLM Engineering Learning Roadmap</span>
+            </div>
+          </div>
+
+          <p>Use ← → keys to navigate</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Agenda -->
+    <section
+      class="slide"
+      data-slide-title="Agenda"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">02 / Agenda</p>
+            <h2>What we will explore</h2>
+          </div>
+
+          <span class="chapter-label">The journey</span>
+        </header>
+
+        <div class="agenda-grid">
+          <a
+  class="agenda-card agenda-button accent-purple"
+  href="diagnose_failures/index.html"
+  aria-label="Open the Failure Diagnosis chapter"
+>
+  <span class="agenda-number">01</span>
+
+  <div class="agenda-icon" aria-hidden="true">◎</div>
+
+  <h3>Diagnose AI failures</h3>
+
+  <p>
+    Separate retrieval problems, context poisoning,
+    and model limitations.
+  </p>
+
+  <p class="agenda-question-map">
+    <strong>Test questions:</strong>
+    1, 2, 3, 4, 5, 6, 7, 8, 11, 18, 20, 22, 24, 25, 27
+  </p>
+
+  <span class="agenda-link">
+    Explore chapter
+    <span aria-hidden="true">→</span>
+  </span>
+</a>
+
+          <article class="agenda-card accent-blue">
+            <span class="agenda-number">02</span>
+            <div class="agenda-icon" aria-hidden="true">⌘</div>
+
+            <h3>Write versioned prompts</h3>
+
+            <p>
+              Treat prompts as testable, reviewable,
+              engineering artifacts.
+            </p>
+
+            <p class="agenda-question-map">
+              <strong>Test questions:</strong> 9, 10, 12, 13, 15, 29, 30
+            </p>
+          </article>
+
+          <article class="agenda-card accent-green">
+            <span class="agenda-number">03</span>
+            <div class="agenda-icon" aria-hidden="true">◈</div>
+
+            <h3>Choose local vs cloud</h3>
+
+            <p>
+              Make decisions using sensitivity, cost,
+              latency, and operational constraints.
+            </p>
+
+            <p class="agenda-question-map">
+              <strong>Test questions:</strong> None
+            </p>
+          </article>
+
+          <article class="agenda-card accent-orange">
+            <span class="agenda-number">04</span>
+            <div class="agenda-icon" aria-hidden="true">✓</div>
+
+            <h3>Own generated output</h3>
+
+            <p>
+              Validate deliverables against business,
+              contract, and legal requirements.
+            </p>
+
+            <p class="agenda-question-map">
+              <strong>Test questions:</strong> 14, 16, 17, 19, 21, 23, 26, 28
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Definition -->
+    <section
+      class="slide"
+      data-slide-title="What is an advanced beginner?"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">03 / Mindset</p>
+            <h2>What is an advanced beginner?</h2>
+          </div>
+
+          <span class="chapter-label">From usage to engineering</span>
+        </header>
+
+        <div class="definition-layout">
+          <div class="definition-statement">
+            <span class="quote-mark">“</span>
+
+            <p>
+              An advanced beginner does not expect an LLM to be perfect.
+              They know how to identify uncertainty, investigate failures,
+              and improve the surrounding system.
+            </p>
+          </div>
+
+          <div class="ladder">
+            <div class="ladder-item muted">
+              <span>01</span>
+
+              <div>
+                <strong>Beginner</strong>
+                <p>Can ask an LLM to complete a task.</p>
+              </div>
+            </div>
+
+            <div class="ladder-item active-level">
+              <span>02</span>
+
+              <div>
+                <strong>Advanced beginner</strong>
+                <p>Can investigate and improve an unreliable result.</p>
+              </div>
+            </div>
+
+            <div class="ladder-item muted">
+              <span>03</span>
+
+              <div>
+                <strong>Practitioner</strong>
+                <p>Can design and operate dependable AI systems.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Versioned prompts -->
+    <section
+      class="slide"
+      data-slide-title="Write versioned prompts"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">04 / Capability 02</p>
+            <h2>Write versioned prompts</h2>
+          </div>
+
+          <span class="chapter-label blue">
+            Prompts are engineering artifacts
+          </span>
+        </header>
+
+        <div class="prompt-layout">
+          <div class="prompt-principles">
+            <h3>Move beyond one-off inputs</h3>
+
+            <p>
+              A production prompt should be stored, reviewed,
+              tested, and released like application code.
+            </p>
+
+            <div class="principle-list">
+              <div class="principle">
+                <span>01</span>
+                <p>
+                  Give each important prompt a stable identifier
+                  and version number.
+                </p>
+              </div>
+
+              <div class="principle">
+                <span>02</span>
+                <p>
+                  Record why a prompt changed and which problem
+                  the change solves.
+                </p>
+              </div>
+
+              <div class="principle">
+                <span>03</span>
+                <p>
+                  Evaluate the new version against a reusable
+                  set of test cases.
+                </p>
+              </div>
+
+              <div class="principle">
+                <span>04</span>
+                <p>
+                  Keep a rollback path when a new version
+                  reduces output quality.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-window">
+            <div class="code-window-header">
+              <div class="window-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <p>prompts/customer-summary.yaml</p>
+              <span class="version-badge">v1.3.0</span>
+            </div>
+
+            <pre><code><span class="code-key">id:</span> customer-summary
+<span class="code-key">version:</span> 1.3.0
+<span class="code-key">owner:</span> customer-platform
+
+<span class="code-key">system:</span> |
+  Summarize the customer case using
+  only the provided evidence.
+
+<span class="code-key">output:</span>
+  <span class="code-prop">format:</span> JSON
+  <span class="code-prop">include_sources:</span> true
+
+<span class="code-key">evaluation:</span>
+  <span class="code-prop">dataset:</span> support-cases-v4
+  <span class="code-prop">minimum_score:</span> 0.90
+
+<span class="code-key">changes:</span>
+  - Reject unsupported conclusions
+  - Require a source for each claim</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Local vs cloud -->
+    <section
+      class="slide"
+      data-slide-title="Choose local vs cloud"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">05 / Capability 03</p>
+            <h2>Choose local vs cloud</h2>
+          </div>
+
+          <span class="chapter-label green">
+            Match deployment to constraints
+          </span>
+        </header>
+
+        <p class="lead-text">
+          The right answer depends on data sensitivity, cost,
+          quality requirements, latency, scale, and operational capacity.
+        </p>
+
+        <div class="comparison-grid">
+          <article class="comparison-card local-card">
+            <div class="comparison-title">
+              <div class="comparison-icon" aria-hidden="true">⌂</div>
+              <div>
+                <span>Option A</span>
+                <h3>Local model</h3>
+              </div>
+            </div>
+
+            <ul class="comparison-list">
+              <li>
+                <span>Best when</span>
+                Sensitive data must remain in a controlled environment.
+              </li>
+              <li>
+                <span>Cost pattern</span>
+                Higher infrastructure effort, predictable usage cost.
+              </li>
+              <li>
+                <span>Trade-off</span>
+                More operational ownership and potentially lower quality.
+              </li>
+            </ul>
+          </article>
+
+          <div class="versus-badge">VS</div>
+
+          <article class="comparison-card cloud-card">
+            <div class="comparison-title">
+              <div class="comparison-icon" aria-hidden="true">☁</div>
+              <div>
+                <span>Option B</span>
+                <h3>Cloud model</h3>
+              </div>
+            </div>
+
+            <ul class="comparison-list">
+              <li>
+                <span>Best when</span>
+                Strong capabilities and rapid delivery are priorities.
+              </li>
+              <li>
+                <span>Cost pattern</span>
+                Usage-based pricing with limited infrastructure setup.
+              </li>
+              <li>
+                <span>Trade-off</span>
+                Vendor dependence and additional data-governance review.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Decision matrix -->
+    <section
+      class="slide"
+      data-slide-title="Deployment decision"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">06 / Decision Framework</p>
+            <h2>Ask these questions first</h2>
+          </div>
+
+          <span class="chapter-label">Decision checklist</span>
+        </header>
+
+        <div class="decision-grid">
+          <article class="decision-card">
+            <span class="decision-icon shield-icon" aria-hidden="true">◇</span>
+            <span class="decision-number">01</span>
+            <h3>Data sensitivity</h3>
+            <p>
+              Can the input leave the organization, region,
+              or controlled network?
+            </p>
+          </article>
+
+          <article class="decision-card">
+            <span class="decision-icon cost-icon" aria-hidden="true">$</span>
+            <span class="decision-number">02</span>
+            <h3>Total cost</h3>
+            <p>
+              Compare API usage with hardware, hosting,
+              maintenance, and engineering effort.
+            </p>
+          </article>
+
+          <article class="decision-card">
+            <span class="decision-icon speed-icon" aria-hidden="true">⚡</span>
+            <span class="decision-number">03</span>
+            <h3>Latency and scale</h3>
+            <p>
+              How quickly must the system respond,
+              and how variable is the traffic?
+            </p>
+          </article>
+
+          <article class="decision-card">
+            <span class="decision-icon quality-icon" aria-hidden="true">✦</span>
+            <span class="decision-number">04</span>
+            <h3>Required quality</h3>
+            <p>
+              Can a smaller model meet the acceptance criteria
+              for this specific task?
+            </p>
+          </article>
+        </div>
+
+        <aside class="decision-rule">
+          <span>Useful rule</span>
+
+          <p>
+            Choose the smallest and simplest deployment that meets
+            your measurable quality, security, and performance requirements.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Slide 7: Own output -->
+    <section
+      class="slide"
+      data-slide-title="Own AI-generated output"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">07 / Capability 04</p>
+            <h2>Own AI-generated output</h2>
+          </div>
+
+          <span class="chapter-label orange">
+            Generated does not mean approved
+          </span>
+        </header>
+
+        <div class="ownership-layout">
+          <div class="ownership-message">
+            <div class="ownership-symbol" aria-hidden="true">✓</div>
+
+            <h3>You remain accountable</h3>
+
+            <p>
+              The model can assist with a deliverable, but it cannot accept
+              professional, contractual, or legal responsibility for it.
+            </p>
+          </div>
+
+          <div class="review-stack">
+            <article class="review-item">
+              <span>01</span>
+
+              <div>
+                <h3>Verify factual claims</h3>
+                <p>
+                  Check names, dates, calculations, references,
+                  and technical assertions.
+                </p>
+              </div>
+            </article>
+
+            <article class="review-item">
+              <span>02</span>
+
+              <div>
+                <h3>Check contract terms</h3>
+                <p>
+                  Confirm that the result matches the agreed scope,
+                  format, acceptance criteria, and confidentiality terms.
+                </p>
+              </div>
+            </article>
+
+            <article class="review-item">
+              <span>03</span>
+
+              <div>
+                <h3>Review legal requirements</h3>
+                <p>
+                  Check privacy, intellectual property,
+                  regulatory, and data-retention obligations.
+                </p>
+              </div>
+            </article>
+
+            <article class="review-item">
+              <span>04</span>
+
+              <div>
+                <h3>Record human approval</h3>
+                <p>
+                  Make a qualified person responsible for the final release.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Practical example -->
+    <section
+      class="slide"
+      data-slide-title="Practical example"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">08 / Practical Example</p>
+            <h2>Putting the four capabilities together</h2>
+          </div>
+
+          <span class="chapter-label">Customer support assistant</span>
+        </header>
+
+        <div class="scenario">
+          <div class="scenario-problem">
+            <span class="scenario-label">The situation</span>
+
+            <h3>
+              An AI assistant provides a customer with an outdated
+              refund policy.
+            </h3>
+
+            <p>
+              Instead of immediately switching models, the team
+              investigates the full pipeline.
+            </p>
+          </div>
+
+          <div class="scenario-actions">
+            <div class="scenario-action purple-border">
+              <span>01</span>
+
+              <div>
+                <strong>Diagnose</strong>
+                <p>
+                  The retriever selected an archived policy document.
+                </p>
+              </div>
+            </div>
+
+            <div class="scenario-action blue-border">
+              <span>02</span>
+
+              <div>
+                <strong>Version</strong>
+                <p>
+                  Prompt v2.1 requires policy dates and source links.
+                </p>
+              </div>
+            </div>
+
+            <div class="scenario-action green-border">
+              <span>03</span>
+
+              <div>
+                <strong>Deploy</strong>
+                <p>
+                  Cloud inference is retained, but sensitive fields
+                  are removed before submission.
+                </p>
+              </div>
+            </div>
+
+            <div class="scenario-action orange-border">
+              <span>04</span>
+
+              <div>
+                <strong>Own</strong>
+                <p>
+                  High-value refunds require human review before sending.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Takeaways -->
+    <section
+      class="slide"
+      data-slide-title="Key takeaways"
+      aria-hidden="true"
+    >
+      <div class="slide-content">
+        <header class="slide-header">
+          <div>
+            <p class="slide-number-label">09 / Key Takeaways</p>
+            <h2>Your advanced-beginner toolkit</h2>
+          </div>
+
+          <span class="chapter-label">Remember these four ideas</span>
+        </header>
+
+        <div class="takeaway-list">
+          <article class="takeaway-item">
+            <span class="takeaway-number">01</span>
+
+            <div>
+              <h3>Diagnose before changing</h3>
+              <p>
+                Determine whether the failure comes from retrieval,
+                context, instructions, or the model itself.
+              </p>
+            </div>
+          </article>
+
+          <article class="takeaway-item">
+            <span class="takeaway-number">02</span>
+
+            <div>
+              <h3>Version what matters</h3>
+              <p>
+                Store critical prompts with tests,
+                ownership, release notes, and rollback options.
+              </p>
+            </div>
+          </article>
+
+          <article class="takeaway-item">
+            <span class="takeaway-number">03</span>
+
+            <div>
+              <h3>Choose using constraints</h3>
+              <p>
+                Let data sensitivity, quality, cost, latency,
+                and operations drive deployment decisions.
+              </p>
+            </div>
+          </article>
+
+          <article class="takeaway-item">
+            <span class="takeaway-number">04</span>
+
+            <div>
+              <h3>Keep humans accountable</h3>
+              <p>
+                Review AI-assisted work against factual,
+                contractual, and legal requirements.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Closing -->
+    <section
+      class="slide slide-closing"
+      data-slide-title="Thank you"
+      aria-hidden="true"
+    >
+      <div class="ambient ambient-three"></div>
+      <div class="ambient ambient-four"></div>
+
+      <div class="slide-content closing-content">
+        <p class="slide-number-label">10 / Closing</p>
+
+        <span class="closing-symbol" aria-hidden="true">✦</span>
+
+        <h2>
+          Be curious about the output.
+          <span>Be responsible for the result.</span>
+        </h2>
+
+        <p>
+          Becoming an advanced beginner is not about knowing every model.
+          It is about developing repeatable engineering judgment.
+        </p>
+
+        <div class="closing-actions">
+          <button class="primary-button" type="button" data-go-slide="0">
+            Restart presentation
+          </button>
+
+          <button class="secondary-button" type="button" id="fullscreenButton">
+            Enter fullscreen
+          </button>
+        </div>
+
+        <div class="closing-tags">
+          <span>Diagnose</span>
+          <span>Version</span>
+          <span>Choose</span>
+          <span>Own</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Presentation controls -->
+  <nav class="presentation-controls" aria-label="Presentation controls">
+    <button
+      class="control-button"
+      id="previousButton"
+      type="button"
+      aria-label="Previous slide"
+    >
+      ←
+    </button>
+
+    <div class="progress-area">
+      <div class="slide-status">
+        <span id="currentSlideNumber">01</span>
+        <span class="status-separator">/</span>
+        <span id="totalSlideNumber">10</span>
+        <span class="current-slide-title" id="currentSlideTitle">
+          Welcome
+        </span>
+      </div>
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="Presentation progress"
+        aria-valuemin="1"
+        aria-valuemax="10"
+        aria-valuenow="1"
+      >
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <button
+      class="control-button"
+      id="nextButton"
+      type="button"
+      aria-label="Next slide"
+    >
+      →
+    </button>
+  </nav>
+
+  <button
+    class="fullscreen-float"
+    id="floatingFullscreenButton"
+    type="button"
+    aria-label="Toggle fullscreen"
+    title="Toggle fullscreen"
+  >
+    ⛶
+  </button>
+
+  <div
+    class="keyboard-hint"
+    id="keyboardHint"
+    aria-hidden="true"
+  >
+    Press ← or → to navigate
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
